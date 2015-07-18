@@ -8,6 +8,7 @@ install:
 branches:
   only:
     - master
+    - develop
 cache:
   - bundler
 language:
