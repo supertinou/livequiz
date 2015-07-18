@@ -10,5 +10,13 @@
   <%= @quiz.owner_email %>
 </p>
 
-<%= link_to 'Edit', edit_quiz_path(@quiz) %> |
+
+<p><b>Here is your access link : </b></p>
+
+<div class="alert alert-warning" role="alert">
+	<% url = "http://"+ ENV['HOST']+quiz_path(@quiz, access_password: @quiz.access_password) %>
+	<%= link_to url, url %>
+</div>
+
+<%= link_to 'Edit', edit_quiz_path(@quiz, access_password: @quiz.access_password ) %> |
 <%= link_to 'Back', quizzes_path %>

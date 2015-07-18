@@ -17,4 +17,8 @@ class Quiz < ActiveRecord::Base
   		 end while self.class.exists?(access_password: access_password)
 	end
 
+	def to_param
+		access_key
+	end
+
 end

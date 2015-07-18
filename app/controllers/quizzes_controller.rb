@@ -24,7 +24,7 @@ class QuizzesController < ApplicationController
     @quiz = Quiz.new(quiz_params)
 
     if @quiz.save
-      redirect_to @quiz, notice: 'Quiz was successfully created.'
+      redirect_to quiz_path(@quiz,access_password: @quiz.access_password), notice: 'Quiz was successfully created.'
     else
       render :new
     end
@@ -33,7 +33,7 @@ class QuizzesController < ApplicationController
   # PATCH/PUT /quizzes/1
   def update
     if @quiz.update(quiz_params)
-      redirect_to @quiz, notice: 'Quiz was successfully updated.'
+      redirect_to quiz_path(@quiz,access_password: @quiz.access_password), notice: 'Quiz was successfully updated.'
     else
       render :edit
     end
@@ -48,7 +48,7 @@ class QuizzesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_quiz
-      @quiz = Quiz.find(params[:id])
+      @quiz = Quiz.find_by(access_key: params[:id], access_password: params[:access_password])
     end
 
     # Only allow a trusted parameter "white list" through.

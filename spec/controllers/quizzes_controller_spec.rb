@@ -47,7 +47,7 @@ RSpec.describe QuizzesController, :type => :controller do
   describe "GET show" do
     it "assigns the requested quiz as @quiz" do
       quiz = Quiz.create! valid_attributes
-      get :show, {:id => quiz.to_param}, valid_session
+      get :show, {:id => quiz.to_param, access_password: quiz.access_password }, valid_session
       expect(assigns(:quiz)).to eq(quiz)
     end
   end
@@ -62,7 +62,7 @@ RSpec.describe QuizzesController, :type => :controller do
   describe "GET edit" do
     it "assigns the requested quiz as @quiz" do
       quiz = Quiz.create! valid_attributes
-      get :edit, {:id => quiz.to_param}, valid_session
+      get :edit, {:id => quiz.to_param, access_password: quiz.access_password }, valid_session
       expect(assigns(:quiz)).to eq(quiz)
     end
   end
@@ -83,7 +83,7 @@ RSpec.describe QuizzesController, :type => :controller do
 
       it "redirects to the created quiz" do
         post :create, {:quiz => valid_attributes}, valid_session
-        expect(response).to redirect_to(Quiz.last)
+        expect(response).to redirect_to(quiz_path(Quiz.last, access_password: Quiz.last.access_password ))
       end
     end
 
@@ -108,34 +108,34 @@ RSpec.describe QuizzesController, :type => :controller do
 
       it "updates the requested quiz" do
         quiz = Quiz.create! valid_attributes
-        put :update, {:id => quiz.to_param, :quiz => new_attributes}, valid_session
+        put :update, {:id => quiz.to_param, access_password: quiz.access_password, :quiz => new_attributes}, valid_session
         quiz.reload
         expect(quiz.title).to eq("My funny Quiz")
       end
 
       it "assigns the requested quiz as @quiz" do
         quiz = Quiz.create! valid_attributes
-        put :update, {:id => quiz.to_param, :quiz => valid_attributes}, valid_session
+        put :update, {:id => quiz.to_param, access_password: quiz.access_password, :quiz => valid_attributes}, valid_session
         expect(assigns(:quiz)).to eq(quiz)
       end
 
       it "redirects to the quiz" do
         quiz = Quiz.create! valid_attributes
-        put :update, {:id => quiz.to_param, :quiz => valid_attributes}, valid_session
-        expect(response).to redirect_to(quiz)
+        put :update, {:id => quiz.to_param, access_password: quiz.access_password, :quiz => valid_attributes}, valid_session
+        expect(response).to redirect_to(quiz_path(quiz, access_password: quiz.access_password))
       end
     end
 
     describe "with invalid params" do
       it "assigns the quiz as @quiz" do
         quiz = Quiz.create! valid_attributes
-        put :update, {:id => quiz.to_param, :quiz => invalid_attributes}, valid_session
+        put :update, {:id => quiz.to_param, access_password: quiz.access_password, :quiz => invalid_attributes}, valid_session
         expect(assigns(:quiz)).to eq(quiz)
       end
 
       it "re-renders the 'edit' template" do
         quiz = Quiz.create! valid_attributes
-        put :update, {:id => quiz.to_param, :quiz => invalid_attributes}, valid_session
+        put :update, {:id => quiz.to_param, access_password: quiz.access_password, :quiz => invalid_attributes}, valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -145,13 +145,13 @@ RSpec.describe QuizzesController, :type => :controller do
     it "destroys the requested quiz" do
       quiz = Quiz.create! valid_attributes
       expect {
-        delete :destroy, {:id => quiz.to_param}, valid_session
+        delete :destroy, {:id => quiz.to_param, access_password: quiz.access_password }, valid_session
       }.to change(Quiz, :count).by(-1)
     end
 
     it "redirects to the quizzes list" do
       quiz = Quiz.create! valid_attributes
-      delete :destroy, {:id => quiz.to_param}, valid_session
+      delete :destroy, {:id => quiz.to_param, access_password: quiz.access_password }, valid_session
       expect(response).to redirect_to(quizzes_url)
     end
   end
