@@ -16,8 +16,8 @@
       <tr>
         <td><%= quiz.title %></td>
         <td><%= quiz.owner_email %></td>
-        <td><%= link_to 'Show', quiz %></td>
-        <td><%= link_to 'Edit', edit_quiz_path(quiz) %></td>
+        <td><%= link_to 'Show', quiz_path(quiz, access_password: quiz.access_password ) %></td>
+        <td><%= link_to 'Edit', edit_quiz_path(quiz, access_password: quiz.access_password ) %></td>
         <td><%= link_to 'Destroy', quiz, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

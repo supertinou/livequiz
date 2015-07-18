@@ -5,6 +5,9 @@ class Quiz < ActiveRecord::Base
 
 	before_validation :generate_access_key, :generate_access_password, on: :create
 
+	has_many :questions, dependent: :destroy
+  	accepts_nested_attributes_for :questions, allow_destroy: true
+
 	def generate_access_key
 		 begin
     		self.access_key = SecureRandom.hex(8)

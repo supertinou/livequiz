@@ -1,10 +1,19 @@
-<%= simple_form_for(@quiz) do |f| %>
+<% form_path = @quiz.persisted? ? quiz_path(@quiz,access_password: @quiz.access_password) : quizzes_path %>
+
+<%= simple_form_for(@quiz,url: form_path) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
     <%= f.input :title %>
     <%= f.input :owner_email %>
   </div>
+
+  <%= f.fields_for :questions do |question| %>
+ 	       <%= render 'question_fields', :f => question %>
+  <% end %>
+
+  <p><%= link_to_add_association raw('<i class="fa fa-plus"></i> Add a question'), f, :questions,:class => 'btn btn-success btn-sm'%></p>
+
 
   <div class="form-actions">
     <%= f.button :submit %>

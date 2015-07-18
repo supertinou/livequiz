@@ -24,8 +24,14 @@ RSpec.describe QuizzesController, :type => :controller do
   # Quiz. As you add validations to Quiz, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    {title: "My awesome Quiz", owner_email: "lagrangemartin@gmail.com"}
-  }
+    {title: "My awesome Quiz", owner_email: "lagrangemartin@gmail.com", 
+      questions_attributes: {
+                              "1437230934321"=>{"title"=>"What color do you prefer ?","_destroy"=>"false"},
+                              "1437230937490"=>{"title"=>"What is your favorite dish ?", "_destroy"=>"false"}
+                            }
+      }
+    }
+  
 
   let(:invalid_attributes) {
     {title: "My awesome Quiz", owner_email: "wrong-email"}
