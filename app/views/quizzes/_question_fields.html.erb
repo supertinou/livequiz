@@ -1,4 +1,14 @@
 <div class='nested-fields well'>
-	<%= f.input :title %>
+	<%= f.input :title ,label: 'Question' %>
 	<%= link_to_remove_association raw('<i class="fa fa-trash-o"></i> remove question'), f %> 
+
+	  <%= f.fields_for :answers do |answer| %>
+ 	       <%= render 'answer_fields', :f => answer %>
+  	 <% end %>
+
+     <p>
+     	<%= link_to_add_association raw('<i class="fa fa-plus"></i> Add an answer'), f, :answers,:class => 'btn btn-success btn-sm'%>
+     </p>
+
+
 </div>

@@ -6,7 +6,11 @@ class Quiz < ActiveRecord::Base
 	before_validation :generate_access_key, :generate_access_password, on: :create
 
 	has_many :questions, dependent: :destroy
-  	accepts_nested_attributes_for :questions, allow_destroy: true
+  	accepts_nested_attributes_for :questions, reject_if: :all_blank, allow_destroy: true
+
+  	validate :questions do 
+    	errors.add(:questions, "should have at least one question") if self.questions.length <= 0
+  	end
 
 	def generate_access_key
 		 begin

@@ -12,10 +12,12 @@
  	       <%= render 'question_fields', :f => question %>
   <% end %>
 
+
   <p><%= link_to_add_association raw('<i class="fa fa-plus"></i> Add a question'), f, :questions,:class => 'btn btn-success btn-sm'%></p>
 
 
   <div class="form-actions">
+    <hr />
     <%= f.button :submit %>
   </div>
 <% end %>
