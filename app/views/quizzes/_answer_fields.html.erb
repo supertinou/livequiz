@@ -2,7 +2,7 @@
   <div class="panel-body">
 		<%= f.input :title, label:'Answer' %>
 		<%= f.input :correct, as: :hidden, input_html: {class: "quiz_questions_answers_correct" } %>
-		<%= link_to_remove_association raw('<i class="fa fa-trash-o"></i>'), f, class: 'btn btn-default btn-sm', data: {toggle: "tooltip", placement: "left" }, title:"Delete answer" %>
+		<%= link_to_remove_association raw('<i class="fa fa-trash-o"></i>'), f, class: 'btn btn-default btn-sm', data: {toggle: "tooltip", placement: "left" }, title:"Remove answer" %>
 		
 		<%= button_tag raw('<i class="fa fa-check fa-green success"></i>'), type: 'button', class: 'btn btn-default btn-sm toggle-correct', data: {toggle: "tooltip", placement: "right", action: 'toggle-correct-answer' }, title:"Set as the correct answer"  %> 
 

@@ -41,7 +41,7 @@ en:
     new:
       title: Title
     show:
-      back: Back
+      back: Back to the Quiz
       confirm: Confirm
       destroy: Destroy
       edit: Edit
