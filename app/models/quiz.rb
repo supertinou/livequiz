@@ -6,6 +6,7 @@ class Quiz < ActiveRecord::Base
 	before_validation :generate_access_key, :generate_access_password, on: :create
 
 	has_many :questions, dependent: :destroy
+	has_many :sessions, dependent: :destroy
   	accepts_nested_attributes_for :questions, reject_if: :all_blank, allow_destroy: true
 
   	validate :questions do 

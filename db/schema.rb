@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150718225854) do
+ActiveRecord::Schema.define(version: 20150719152929) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,18 @@ ActiveRecord::Schema.define(version: 20150718225854) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
+  create_table "participants", force: :cascade do |t|
+    t.integer  "session_id"
+    t.string   "email"
+    t.string   "authorization_key"
+    t.string   "authorization_password"
+    t.string   "name"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "participants", ["session_id"], name: "index_participants_on_session_id", using: :btree
+
   create_table "questions", force: :cascade do |t|
     t.text     "title"
     t.integer  "quiz_id"
@@ -67,6 +79,17 @@ ActiveRecord::Schema.define(version: 20150718225854) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "sessions", force: :cascade do |t|
+    t.integer  "quiz_id"
+    t.string   "access_key"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "sessions", ["quiz_id"], name: "index_sessions_on_quiz_id", using: :btree
+
   add_foreign_key "answers", "questions"
+  add_foreign_key "participants", "sessions"
   add_foreign_key "questions", "quizzes"
+  add_foreign_key "sessions", "quizzes"
 end

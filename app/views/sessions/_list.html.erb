@@ -1,0 +1,31 @@
+<%- model_class = Session -%>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:participants) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @sessions.each do |session| %>
+      <tr>
+        <td><%= session.participants.count %></td>
+        <td><%=l session.created_at %></td>
+        <td>
+
+          <%= link_to 'More details', session_path(session), :class => 'btn btn-default btn-xs' %>
+
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_session_path(session), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      session_path(session),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-default' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

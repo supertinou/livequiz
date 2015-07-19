@@ -22,4 +22,12 @@
 
 <%= link_to raw('<i class="fa fa-pencil"></i> Edit the Quiz'), edit_quiz_path(@quiz, access_password: @quiz.access_password ), :class => 'btn btn-default' %>
 
-<%= link_to raw('<i class="fa fa-clock-o"></i> Plan a Quiz sessions'), edit_quiz_path(@quiz, access_password: @quiz.access_password ), :class => 'btn btn-default' %>
+<%= link_to raw('<i class="fa fa-clock-o"></i> Create a new Quiz session'), new_quiz_session_path(quiz_id: @quiz, access_password: @quiz.access_password ), :class => 'btn btn-default' %>
+
+<h3>Quiz sessions</h3>
+
+<% if !@quiz.sessions.empty? %>
+	<%= @sessions = @quiz.sessions ; render 'sessions/list'   %>
+<% else %>
+	<p>No session have been planed yet. Do you want to plan one ?</p>
+<% end %>
