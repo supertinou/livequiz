@@ -23,15 +23,28 @@ RSpec.describe QuizzesController, :type => :controller do
   # This should return the minimal set of attributes required to create a valid
   # Quiz. As you add validations to Quiz, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    {title: "My awesome Quiz", owner_email: "lagrangemartin@gmail.com", 
-      questions_attributes: {
-                              "1437230934321"=>{"title"=>"What color do you prefer ?","_destroy"=>"false"},
-                              "1437230937490"=>{"title"=>"What is your favorite dish ?", "_destroy"=>"false"}
-                            }
-      }
-    }
-  
+
+  let(:quiz) { FactoryGirl.create :quiz_with_questions_and_answers }
+
+  let(:valid_attributes) { 
+
+    { "title"=>"ddrdr",
+       "owner_email"=>"drrr@gmail.com",
+       "questions_attributes"=>{"0"=>{"title"=>"Quelle couleur le ciel ?",
+       "answers_attributes"=>{"0"=>{"title"=>"bleu",
+       "correct"=>"false",
+       "_destroy"=>"false"},
+       "1"=>{"title"=>"blanc",
+       "correct"=>"false",
+       "_destroy"=>"false"},
+       "1437272922478"=>{"title"=>"rouge",
+       "correct"=>"true",
+       "_destroy"=>"false"},
+       "1437272925347"=>{"title"=>"vert",
+       "correct"=>"false",
+       "_destroy"=>"false"}},
+       "_destroy"=>"false"}}}
+  }   
 
   let(:invalid_attributes) {
     {title: "My awesome Quiz", owner_email: "wrong-email"}
@@ -44,7 +57,6 @@ RSpec.describe QuizzesController, :type => :controller do
 
   describe "GET index" do
     it "assigns all quizzes as @quizzes" do
-      quiz = Quiz.create! valid_attributes
       get :index, {}, valid_session
       expect(assigns(:quizzes)).to eq([quiz])
     end
@@ -52,7 +64,6 @@ RSpec.describe QuizzesController, :type => :controller do
 
   describe "GET show" do
     it "assigns the requested quiz as @quiz" do
-      quiz = Quiz.create! valid_attributes
       get :show, {:id => quiz.to_param, access_password: quiz.access_password }, valid_session
       expect(assigns(:quiz)).to eq(quiz)
     end
@@ -67,7 +78,7 @@ RSpec.describe QuizzesController, :type => :controller do
 
   describe "GET edit" do
     it "assigns the requested quiz as @quiz" do
-      quiz = Quiz.create! valid_attributes
+
       get :edit, {:id => quiz.to_param, access_password: quiz.access_password }, valid_session
       expect(assigns(:quiz)).to eq(quiz)
     end
