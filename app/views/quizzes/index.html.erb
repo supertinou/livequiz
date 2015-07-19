@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Quizzes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Owner email</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @quizzes.each do |quiz| %>
+      <tr>
+        <td><%= quiz.title %></td>
+        <td><%= quiz.owner_email %></td>
+        <td><%= link_to 'Show', quiz_path(quiz, access_password: quiz.access_password ) %></td>
+        <td><%= link_to 'Edit', edit_quiz_path(quiz, access_password: quiz.access_password ) %></td>
+        <td><%= link_to 'Destroy', quiz, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Quiz', new_quiz_path %>
