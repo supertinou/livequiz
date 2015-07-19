@@ -1,13 +1,16 @@
-<div class='nested-fields well'>
+<div class='nested-fields well question-container'>
 	<%= f.input :title ,label: 'Question' %>
-	<%= link_to_remove_association raw('<i class="fa fa-trash-o"></i> remove question'), f %> 
 
-	  <%= f.fields_for :answers do |answer| %>
+	<br />
+
+	 <%= f.fields_for :answers do |answer| %>
  	       <%= render 'answer_fields', :f => answer %>
   	 <% end %>
 
      <p>
-     	<%= link_to_add_association raw('<i class="fa fa-plus"></i> Add an answer'), f, :answers,:class => 'btn btn-success btn-sm'%>
+     	<%= link_to_add_association raw('<i class="fa fa-plus"></i> Add an answer'), f, :answers, :class => 'btn btn-sm btn-default' %>
+     	<%= link_to_remove_association raw('<i class="fa fa-trash"></i> Remove question'), f, :class => 'btn btn-sm btn-default' %> 
+
      </p>
 
 

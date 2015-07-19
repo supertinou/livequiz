@@ -1,9 +1,11 @@
 <% form_path = @quiz.persisted? ? quiz_path(@quiz,access_password: @quiz.access_password) : quizzes_path %>
 
 <%= simple_form_for(@quiz,url: form_path) do |f| %>
+  
+  <%= @model = @quiz ; render partial: 'shared/error_message' %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
+  <div class="form-inputs well">
     <%= f.input :title %>
     <%= f.input :owner_email %>
   </div>
@@ -13,11 +15,12 @@
   <% end %>
 
 
-  <p><%= link_to_add_association raw('<i class="fa fa-plus"></i> Add a question'), f, :questions,:class => 'btn btn-success btn-sm'%></p>
+  <p><%= link_to_add_association raw('<i class="fa fa-plus"></i> Add a question'), f, :questions, :class => 'btn btn-default' %></p>
 
 
   <div class="form-actions">
     <hr />
+
     <%= f.button :submit %>
   </div>
 <% end %>
