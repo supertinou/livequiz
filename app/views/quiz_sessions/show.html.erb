@@ -1,0 +1,35 @@
+<input type="hidden" data-attribute='authorization_key' value="<%= @participant.authorization_key %>" />
+<input type="hidden" data-attribute='session_key' value="<%= @session.access_key %>" />
+
+<div class="row">
+  <div class="col-md-4">
+     <div class="list-group-item">
+          <h4 class="list-group-item-heading">Activity Feed</h4>
+          <hr />
+
+          <table class='bordered'>
+            <tr><td>Anthony just joined</td></tr>
+            <tr><td>Ania just left</td></tr>
+            <tr><td>Anthony just answered question 32</td></tr>
+          </table>
+      </div>
+      <div class="list-group-item">
+          <h4 class="list-group-item-heading">Participants</h4>
+          <hr />
+
+          <table class='bordered'>
+            <tr><td>Anthony [ONLINE]</td></tr>
+            <tr><td>Ania [OFFLINE]</td></tr>
+          </table>
+      </div>
+  </div>
+
+  <div class="col-md-8">
+     <div class="list-group-item">
+          <h4 class="list-group-item-heading">Questions</h4>
+          <p class="list-group-item-text">
+            
+          </p>
+        </div>
+  </div>
+</div>

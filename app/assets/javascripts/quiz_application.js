@@ -13,5 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require cocoon
-//= require create_quiz
+//= require pubnub-3.7.12.min
+//= require quiz
