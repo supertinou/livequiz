@@ -94,6 +94,7 @@ GEM
     email_validator (1.6.0)
       activemodel
     erubis (2.7.0)
+    eventmachine (1.0.7)
     execjs (2.5.2)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -148,6 +149,7 @@ GEM
     neat (1.7.2)
       bourbon (>= 4.0)
       sass (>= 3.3)
+    net-http-persistent (2.9.4)
     newrelic_rpm (3.12.1.298)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
@@ -159,6 +161,10 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
+    pubnub (3.7.5)
+      eventmachine (~> 1.0)
+      json (~> 1.8)
+      net-http-persistent (~> 2.9)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -303,6 +309,7 @@ DEPENDENCIES
   normalize-rails (~> 3.0.0)
   pg
   pry-rails
+  pubnub
   rack-timeout
   rails (= 4.2.3)
   rails_stdout_logging
