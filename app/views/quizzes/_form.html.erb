@@ -5,10 +5,12 @@
   <%= @model = @quiz ; render partial: 'shared/error_message' %>
   <%= f.error_notification %>
 
-  <div class="form-inputs well">
-    <%= f.input :title %>
-    <%= f.input :owner_email %>
-  </div>
+  <div class="panel panel-default nested-fields answer-container form-inputs">
+    <div class="panel-body">
+      <%= f.input :title %>
+      <%= f.input :owner_email %>
+    </div>
+  </div>  
 
   <%= f.fields_for :questions do |question| %>
  	       <%= render 'question_fields', :f => question %>

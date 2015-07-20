@@ -1,0 +1,34 @@
+<%- model_class = Participant -%>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:email) %></th>
+      <th><%= model_class.human_attribute_name(:authorization_key) %></th>
+      <th><%= model_class.human_attribute_name(:authorization_password) %></th>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @participants.each do |participant| %>
+      <tr>
+        <td><%= participant.email %></td>
+        <td><%= participant.authorization_key %></td>
+        <td><%= participant.authorization_password %></td>
+        <td><%= participant.name %></td>
+        <td>
+
+          <%= link_to 'More details', participant_path(participant), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_participant_path(participant), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      participant_path(participant),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

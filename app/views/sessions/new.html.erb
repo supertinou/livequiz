@@ -1,0 +1,5 @@
+<%- model_class = Session -%>
+
+<h3><%= @quiz.title %> > <%=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize %></h3>
+
+<%= render :partial => 'form' %>

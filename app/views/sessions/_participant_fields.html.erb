@@ -1,0 +1,10 @@
+<div class="panel panel-default nested-fields">
+  <div class="panel-body">
+	<ul class="list-inline">
+    <li><%= f.input :name  %></li>
+    <li class="col-xs-7"><%= f.input :email %></li>
+    <li><%= link_to_remove_association raw('<i class="fa fa-trash-o"></i>'), f, class: 'btn btn-default', data: {toggle: "tooltip", placement: "right" }, title:"Remove participant" %></li>
+  </ul>
+
+  </div>
+</div>

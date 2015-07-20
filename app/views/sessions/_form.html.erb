@@ -1,0 +1,25 @@
+<br />
+
+<%= simple_form_for [@quiz, @session] , :html => { :class => 'form-horizontal' } do |f| %>
+
+<%= hidden_field_tag "session[trick]", nil %>
+
+<%= @model = @session ; render partial: 'shared/error_message' %>
+  <%= f.error_notification %>
+
+	<%= hidden_field_tag 'access_password', params[:access_password] %>
+
+ <h4>Participants</h4>
+
+ <%= f.fields_for :participants do |participant| %>
+ 	<%= render 'participant_fields', :f => participant %>
+ <% end %>
+
+ <p>
+ 	<%= link_to_add_association raw('<i class="fa fa-plus"></i> Add a participant'), f, :participants, :class => 'btn btn-sm btn-default' %>
+ </p>
+
+ <hr />
+
+ <%= f.button :submit, :class => 'btn-primary' %> 
+<% end %>
