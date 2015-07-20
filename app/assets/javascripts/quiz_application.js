@@ -14,4 +14,7 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require pubnub-3.7.12.min
+//= require react
+//= require react_ujs
+//= require components
 //= require quiz
