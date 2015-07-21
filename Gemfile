@@ -32,6 +32,8 @@ gem "font-awesome-rails"
 gem "pubnub"
 gem 'react-rails'
 gem 'sprockets-coffee-react'
+gem 'underscore-rails'
+
 
 
 group :development do
