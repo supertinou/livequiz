@@ -7,6 +7,7 @@ $ ->
     participant_name = $('[data-attribute="participant_name"]').val()
 
     participantListReact = $('[data-react-class="ParticipantsList"]').get(0)
+    activityFeedReact = $('[data-react-class="ActivityFeed"]').get(0)
   
     client_channel = session_key+"-client"
     server_channel = session_key+"-server"
@@ -16,6 +17,9 @@ $ ->
     ##################### PUBNUB CLIENT  ##############################
 
     presence_event_callback = (event_message, env, ch, timer, magic_ch) ->
+
+      React.render(<ActivityFeed newActivity=event_message />, activityFeedReact)
+      
       status = switch event_message.action
           when 'leave' then 'offline'
           when 'timeout' then 'offline'
@@ -36,15 +40,6 @@ $ ->
       uuid: authorization_key,
       origin: 'pubsub.pubnub.com',
       ssl: true
-    )
-
-    pubnub.state(
-      channel: chat_channel
-      uuid: authorization_key
-      state:
-          name: participant_name
-      callback: (m)-> 
-      error: (m)-> 
     )
 
     pubnub.subscribe
