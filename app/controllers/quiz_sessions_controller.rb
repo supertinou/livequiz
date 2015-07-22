@@ -7,5 +7,10 @@ class QuizSessionsController < QuizApplicationController
 		if @participant.nil? || (@session.id != @participant.session )
 			redirect_to root_path, notice: 'You are not authorized to access this sessions' if @participant.nil?
 		end
+
+		@participant_list = @session.participants.to_a.collect do  |participant|
+			status = @participant.id == participant.id ? 'online' : ''
+			{ uuid: participant.authorization_key, status: status , name: participant.name }
+		end
 	end
 end
