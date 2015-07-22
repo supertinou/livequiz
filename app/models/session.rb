@@ -26,6 +26,10 @@ class Session < ActiveRecord::Base
       "#{access_key}-client"
   end
 
+  def chat_channel
+      "#{access_key}-chat"
+  end
+
   private
 
   def generate_access_key
@@ -35,9 +39,10 @@ class Session < ActiveRecord::Base
   end
 
   def set_forbidden_access_to_session_channels
-      [server_channel,client_channel].each do |chan| 
+      [server_channel,client_channel,chat_channel].each do |chan| 
         LiveQuiz::PubNub.client.grant(channel: chan, read: false, write: false){|envelope|}
       end
+
   end
 
 end

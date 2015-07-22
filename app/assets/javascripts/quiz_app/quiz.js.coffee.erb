@@ -1,0 +1,68 @@
+$ ->  
+
+    ###################  INITIALIZE KEYS  ##############################
+
+    authorization_key = $('[data-attribute="authorization_key"]').val()
+    session_key = $('[data-attribute="session_key"]').val()
+    participant_name = $('[data-attribute="participant_name"]').val()
+
+    participantListReact = $('[data-react-class="ParticipantsList"]').get(0)
+    activityFeedReact = $('[data-react-class="ActivityFeed"]').get(0)
+  
+    client_channel = session_key+"-client"
+    server_channel = session_key+"-server"
+    chat_channel = session_key+"-chat"
+
+
+    ##################### PUBNUB CLIENT  ##############################
+
+    presence_event_callback = (event_message, env, ch, timer, magic_ch) ->
+
+      React.render(<ActivityFeed newActivity=event_message />, activityFeedReact)
+      
+      status = switch event_message.action
+          when 'leave' then 'offline'
+          when 'timeout' then 'offline'
+          when 'join' then 'online'
+      name = if event_message.data?
+                event_message.data.name
+            else
+              null
+
+      if status?
+          uuid_with_status = {uuid: event_message.uuid, status: status, name: name}
+          React.render(<ParticipantsList newParticipant=uuid_with_status />, participantListReact)    
+      
+    pubnub = PUBNUB(
+      publish_key: '<%= ENV.fetch('PUBNUB_PUBLISH_KEY') %>',
+      subscribe_key: '<%= ENV.fetch('PUBNUB_SUBSCRIBE_KEY') %>',
+      auth_key: authorization_key,
+      uuid: authorization_key,
+      origin: 'pubsub.pubnub.com',
+      ssl: true
+    )
+
+    pubnub.subscribe
+        channel: chat_channel,
+        state:
+          name: participant_name
+        message: (m, env, ch, timer, magic_ch) ->
+        presence: presence_event_callback
+        connect: ->
+        heartbeat: 20 
+
+    pubnub.here_now
+        channel: chat_channel,
+        state: true
+        callback: (m) ->
+            uuids_with_status = _.map(m.uuids, (uuid) -> 
+                { uuid: uuid.uuid, status: 'online', name: uuid.state.name }
+            )
+            React.render(<@ParticipantsList onlineParticipants=uuids_with_status />, participantListReact)    
+
+    pubnub.subscribe
+        channel: server_channel,
+        message: (message, env, ch, timer, magic_ch) ->
+        connect: ->
+
+   

@@ -12,6 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require rails-livestamp
+//= require moment
 //= require twitter/bootstrap
-//= require cocoon
-//= require create_quiz
+//= require pubnub-3.7.12.min
+//= require underscore
+//= require underscore_utilities
+//= require react
+//= require react_ujs
+//= require jedwatson_classnames
+//= require_tree ./quiz_app

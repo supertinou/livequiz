@@ -30,6 +30,12 @@ gem "twitter-bootstrap-rails"
 gem "cocoon"
 gem "font-awesome-rails"
 gem "pubnub"
+gem 'react-rails'
+gem 'sprockets-coffee-react'
+gem 'underscore-rails'
+gem 'rails-livestamp'
+gem 'momentjs-rails'
+
 
 
 group :development do

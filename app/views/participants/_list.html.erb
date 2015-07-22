@@ -19,6 +19,7 @@
         <td><%= participant.name %></td>
         <td>
 
+          <%= link_to raw('<i class="fa fa-external-link-square"></i>'), quiz_session_path(participant), :class => 'btn btn-default btn-xs', :target => "_blank" %>
           <%= link_to 'More details', participant_path(participant), :class => 'btn btn-default btn-xs' %>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_participant_path(participant), :class => 'btn btn-default btn-xs' %>
