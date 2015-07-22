@@ -18,9 +18,7 @@
 
 <div class="panel panel-default nested-fields answer-container">
   <div class="panel-body">
-  <% path = "/quiz_sessions/#{@participant.session.access_key}/#{@participant.authorization_key}/#{@participant.authorization_password}" %>
-
-  <% url = "http://"+ ENV['HOST']+path %>
+  <% url = quiz_session_path(@participant) %>
   <%= link_to url, url %>
   </div>
 </div>
