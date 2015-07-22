@@ -15,7 +15,7 @@
 //= require twitter/bootstrap
 //= require pubnub-3.7.12.min
 //= require underscore
+//= require underscore_utilities
 //= require react
 //= require react_ujs
-//= require components
-//= require quiz
+//= require jedwatson_classnames
