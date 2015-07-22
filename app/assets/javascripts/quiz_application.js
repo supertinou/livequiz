@@ -19,3 +19,4 @@
 //= require react
 //= require react_ujs
 //= require jedwatson_classnames
+//= require_tree ./quiz_app
