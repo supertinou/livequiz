@@ -12,6 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require rails-livestamp
+//= require moment
 //= require twitter/bootstrap
 //= require pubnub-3.7.12.min
 //= require underscore

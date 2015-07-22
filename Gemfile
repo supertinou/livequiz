@@ -33,6 +33,8 @@ gem "pubnub"
 gem 'react-rails'
 gem 'sprockets-coffee-react'
 gem 'underscore-rails'
+gem 'rails-livestamp'
+gem 'momentjs-rails'
 
 
 
