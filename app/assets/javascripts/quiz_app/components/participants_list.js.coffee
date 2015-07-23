@@ -32,7 +32,7 @@
     participants: ( this.props.participants || this.props.onlineParticipants )
   render: ->
       <div className="list-group-item">
-          <h4 className="list-group-item-heading">Participants ({countOnlineParticipants(this.state.participants)})</h4>
+          <h4 className="list-group-item-heading">Online ({countOnlineParticipants(this.state.participants)})</h4>
           <hr />
             <ul>
               {

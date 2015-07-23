@@ -13,6 +13,15 @@
     <![endif]-->
 
     <%= stylesheet_link_tag "application", :media => "all" %>
+    <style type="text/css">
+      body { background-image:  url(<%= image_path('bg.jpg') %>); }
+      .big-text {
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 50px;
+        text-shadow: 0 2px 0 #fff, 0 -1px 0 #999;
+        color: #ddd;
+      }
+    </style>
 
     <!-- For third-generation iPad with high-resolution Retina display: -->
     <!-- Size should be 144 x 144 pixels -->
