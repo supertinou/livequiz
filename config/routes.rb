@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   	member do 
 
   		get 'start'
+      get 'switch_to_next_question'
   		
   	end
   end

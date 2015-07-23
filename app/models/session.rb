@@ -56,11 +56,29 @@ class Session < ActiveRecord::Base
   end
 
   def started?
-    starting_date.present? && current_question.present?
+    starting_date.present?
   end
 
   def auth_key
     quiz.access_key
+  end
+
+  # Switch to next question
+  # Return false if it can't switch because it's the final question
+  def switch_to_next_question!
+
+    raise "Quiz has to be started to switch the question" if !started?
+
+    next_question_index = self.current_question_index + 1
+    next_question_exist = self.quiz.questions.rank(:row_order)[next_question_index]
+    succeeded_to_switch = if !next_question_exist.nil?
+                          self.current_question_index = next_question_index
+                          send_current_question()
+                          save()
+                        else
+                          false
+                        end
+    return succeeded_to_switch                  
   end
 
 private

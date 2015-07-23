@@ -34,4 +34,28 @@ RSpec.describe Session,  :type => :model, :vcr => {:cassette_name => 'models/ses
 
   end
 
+  describe '#switch_to_next_question!' do
+
+    before { quiz_session.start! }
+
+    it "succeed to switch question until the end" do
+
+      expect(quiz_session.current_question_index).to eq(0)
+
+      expect(quiz_session.switch_to_next_question!).to eq(true)
+      expect(quiz_session.current_question_index).to eq(1)
+
+      expect(quiz_session.switch_to_next_question!).to eq(true)
+      expect(quiz_session.current_question_index).to eq(2)
+
+      expect(quiz_session.switch_to_next_question!).to eq(true)
+      expect(quiz_session.current_question_index).to eq(3)
+
+      expect(quiz_session.switch_to_next_question!).to eq(false)
+      expect(quiz_session.current_question_index).to eq(3)
+
+    end
+
+  end
+
 end

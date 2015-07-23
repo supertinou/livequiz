@@ -46,6 +46,7 @@ en:
       destroy: Destroy
       edit: Edit
       start: Start
+      switch_to_next_question: Switch to next question
       title: Title
   time:
     formats:

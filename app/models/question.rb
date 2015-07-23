@@ -32,4 +32,9 @@ class Question < ActiveRecord::Base
     format 
   end
 
+  # indicate if the question is the last question from the quiz
+  def last_question?
+    self.id == quiz.questions.rank(:row_order).last.id
+  end 
+
 end
