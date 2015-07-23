@@ -6,7 +6,14 @@ Rails.application.routes.draw do
   	resources :sessions, only: [:new, :create,:show, :edit]
   end
 
-  resources :sessions, only: [:show, :edit, :update, :destroy] 
+  resources :sessions, only: [:show, :edit, :update, :destroy] do
+
+  	member do 
+
+  		get 'start'
+  		
+  	end
+  end
 
   get 'quiz_sessions/:session_key/:authorization_key/:authorization_password', to: "quiz_sessions#show"
 

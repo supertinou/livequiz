@@ -3,9 +3,19 @@
   <h3><%= @session.quiz.title %> > <%=t '.title', :default => model_class.model_name.human.titleize %></h3>
 </div>
 
+<div class="panel panel-default">
+  <div class="panel-body">
+    <p><b>Status:</b> <%= @session.started? ? "STARTED" : 'NOT STARTED' %> </p>
+    <% if @session.started? %>
+    <p><b>Current question: </b> <%= @session.current_question_index + 1 %>) <%= @session.current_question.title %></p>
+    <% end %>
+  </div>
+</div>
+
+
 <p><b>Here is the access key to access the quiz session : </b></p>
 
-<div class="panel panel-default nested-fields answer-container">
+<div class="panel panel-default">
   <div class="panel-body">
   <%= @session.access_key %>
   </div>
@@ -15,6 +25,10 @@
 
 <%= @participants = @session.participants ; render 'participants/list'   %>
 
+<% if !@session.started? %>
+  <%= link_to t('.start', :default => raw('<i class="fa fa-play-circle"></i>
+ Start the Quiz session')), start_session_path(@session), :class => 'btn btn-default'  %> 
+<% end %>
 
 <%= link_to t('.back', :default => 'Back to the Quiz'),
               quiz_path(@session.quiz, access_password: @session.quiz.access_password), :class => 'btn btn-default'  %> 

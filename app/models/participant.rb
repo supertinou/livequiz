@@ -28,7 +28,7 @@ class Participant < ActiveRecord::Base
 
   def grant_access_to_session_channels
     LiveQuiz::PubNub.client.grant(channel: self.session.server_channel, auth_key: self.authorization_key ,  read: true, write: false){|envelope| puts envelope.payload}
-    LiveQuiz::PubNub.client.grant(channel: self.session.client_channel, presence: self.session.client_channel,  auth_key: self.authorization_key ,  read: false, write: true){|envelope| puts envelope.payload}
+    LiveQuiz::PubNub.client.grant(channel: self.session.client_channel, auth_key: self.authorization_key ,  read: false, write: true){|envelope| puts envelope.payload}
     LiveQuiz::PubNub.client.grant(:channel => self.session.chat_channel, presence: self.session.chat_channel, auth_key: self.authorization_key){|envelope| puts envelope.payload}
   end
 

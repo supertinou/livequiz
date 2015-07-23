@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :set_session, only: [:show, :edit, :update, :destroy]
+  before_action :set_session, only: [:show, :edit, :update, :destroy, :start]
   before_action :set_quiz, only: [:new, :create]
 
   # GET /sessions/1
@@ -43,6 +43,14 @@ class SessionsController < ApplicationController
     quiz = @session.quiz
     @session.destroy
     redirect_to quiz_path(quiz,access_password: quiz.access_password), notice: 'Session was successfully destroyed.'
+  end
+
+  def start
+    if @session.start!
+      redirect_to @session, notice: 'Session has been successfully started'
+    else
+      redirect_to @session, error: 'Session cannot be started'
+    end
   end
 
   private

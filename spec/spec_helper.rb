@@ -1,4 +1,5 @@
 require "webmock/rspec"
+require 'vcr'
 
 # http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
@@ -12,6 +13,17 @@ RSpec.configure do |config|
   end
 
   config.order = :random
+
 end
 
-WebMock.disable_net_connect!(allow_localhost: true)
+WebMock.disable_net_connect!
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'spec/vcr_cassettes'
+  c.hook_into :webmock
+  c.default_cassette_options = {
+      :match_requests_on => [:method, VCR.request_matchers.uri_without_param(:pnsdk, :uuid)]
+  }
+  c.configure_rspec_metadata!
+
+end

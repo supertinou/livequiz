@@ -53,6 +53,7 @@ group :development, :test do
   gem "factory_girl_rails"
   gem "pry-rails"
   gem "rspec-rails", "~> 3.1.0"
+  gem 'vcr'
 end
 
 group :test do

@@ -19,4 +19,17 @@ class Question < ActiveRecord::Base
   	Question.where(quiz_id: quiz_id).where("row_order < ?", row_order).count
   end
 
+  # Present question with a specific format
+  def format(format_name)
+
+    format = if format_name == :title_with_answers
+      h = { title: title }
+      h[:answers] = answers.to_a.collect{|answer| {id: answer.id, title: answer.title }}
+      h
+    else
+      raise 'Format Unknown'
+    end
+    format 
+  end
+
 end

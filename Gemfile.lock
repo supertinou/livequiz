@@ -293,6 +293,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    vcr (2.9.3)
     web-console (2.2.1)
       activemodel (>= 4.0)
       binding_of_caller (>= 0.7.2)
@@ -358,5 +359,6 @@ DEPENDENCIES
   uglifier
   underscore-rails
   unicorn
+  vcr
   web-console
   webmock

@@ -45,6 +45,7 @@ en:
       confirm: Confirm
       destroy: Destroy
       edit: Edit
+      start: Start
       title: Title
   time:
     formats:

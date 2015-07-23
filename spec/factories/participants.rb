@@ -1,10 +1,8 @@
 FactoryGirl.define do
   factory :participant do
     session nil
-email "MyString"
-authorization_key "MyString"
-authorization_password "MyString"
-name "MyString"
+	sequence(:email)  { |n| "email-#{n}@provider.com" }
+	sequence(:name)  { |n| "User-#{n}" }
   end
 
 end
