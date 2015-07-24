@@ -34,7 +34,7 @@ class Session < ActiveRecord::Base
   end
 
   def current_question
-    self.quiz.questions.rank(:row_order)[current_question_index]
+    current_question_index ? self.quiz.questions.rank(:row_order)[current_question_index] : nil
   end
 
   # Start the quiz session
