@@ -27,8 +27,8 @@ skip_cleanup: true
 on:
 all_branches: true
 app:
-master: livequizz
-develop: livequizz-staging
+master: livequiz-app
+develop: livequiz-staging
 run:
 - "rake db:migrate"
 - "rake db:setup"
