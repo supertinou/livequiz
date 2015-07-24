@@ -8,7 +8,8 @@ class LiveQuiz
     fetchSettings: ->
 
       @authorization_key = $('[data-attribute="authorization_key"]').val()
-      @uuid = @authorization_key
+      @auth_key = @authorization_key
+      @uuid = @auth_key
       @session_key = $('[data-attribute="session_key"]').val()
       @participant_name = $('[data-attribute="participant_name"]').val()
       @client_channel = @session_key+"-client"
@@ -50,7 +51,7 @@ class LiveQuiz
       @pubnub = PUBNUB(
           publish_key: @publish_key
           subscribe_key: @subscribe_key
-          auth_key: @authorization_key
+          auth_key: @auth_key
           uuid: @uuid
           origin: 'pubsub.pubnub.com'
           ssl: true
@@ -122,7 +123,7 @@ class LiveQuiz
     sendEvent: (event, data) ->
       @pubnub.publish
         channel: @client_channel        
-        message: data
+        message: { event: event, auth_key: @auth_key, data: data}
         callback : ->
       
 

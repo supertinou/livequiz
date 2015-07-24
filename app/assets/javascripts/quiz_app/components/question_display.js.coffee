@@ -1,7 +1,6 @@
 @QuestionDisplay = React.createClass(
   # This method is not called for the initial render
   componentWillReceiveProps: (nextProps) ->
-    console.log("______componentWillReceiveProps______")
     this.setState
         question: nextProps.question
   
@@ -13,7 +12,7 @@
   render: ->
       if this.state.question?
         <div className="list-group-item">
-          <h1><span id="countdown-container"></span> { this.state.question.title }</h1>
+          <h1>{ this.state.question.title }</h1>
           <hr />
           <ul>
             {

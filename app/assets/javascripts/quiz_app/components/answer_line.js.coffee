@@ -1,6 +1,5 @@
 @AnswerLine = React.createClass(
   sendAnswer: ->
-      console.log("____sendAnswer____")
       liveQuiz.answerQuestion(this.props.answer.id)
 
   render: ->
