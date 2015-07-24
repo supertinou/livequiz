@@ -41,6 +41,7 @@ class Session < ActiveRecord::Base
   def start!
     self.current_question_index = 0
     self.starting_date = DateTime.now()
+    subscribe_to_client_events()
     send_current_question()
     schedule_switch_to_next_question!(30)
     save()
@@ -89,6 +90,42 @@ class Session < ActiveRecord::Base
                           false
                         end
     return succeeded_to_switch                  
+  end
+
+  def subscribe_to_client_events
+    LiveQuiz::PubNub.client.subscribe(
+      channel:  client_channel,
+      auth_key: auth_key,
+      callback: handle_client_events
+    )
+  end
+
+  # called each time there is an event sent in the client channel
+  def handle_client_events
+    lambda do |envelope|
+      m = envelope.message
+      case m['event']
+      when 'answer'
+        handle_question_answer(m['auth_key'], m['data']['answer_id'])
+      end
+    end
+  end
+
+  def handle_question_answer(auth_key, answer_id)
+    
+    participant, answered_correctly = nil, nil
+    
+    ActiveRecord::Base.connection_pool.with_connection do
+      participant = self.participants.where(authorization_key: auth_key).take
+      answer = Answer.find(answer_id)
+      answered_correctly = participant.answer_question(current_question, answer)
+    end
+
+    send_event_with_data('answered', { uuid: participant.authorization_key, 
+                                       name: participant.name, 
+                                       timestamp: Time.now.to_i,
+                                       correct: answered_correctly
+                                      })
   end
 
 private

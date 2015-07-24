@@ -35,6 +35,10 @@ class Question < ActiveRecord::Base
   # indicate if the question is the last question from the quiz
   def last_question?
     self.id == quiz.questions.rank(:row_order).last.id
+  end
+
+  def correct_answer
+    answers.where(correct: true).take
   end 
 
 end

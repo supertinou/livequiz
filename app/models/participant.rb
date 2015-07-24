@@ -12,6 +12,12 @@ class Participant < ActiveRecord::Base
   after_commit :grant_access_to_session_channels, on: :create
   after_commit :revoke_access_to_session_channels, on: :destroy
 
+  # Return if the question have been answered correctly or not
+  def answer_question(question, answer)
+    question.correct_answer.id == answer.id
+    ## TODO Save Answered question
+  end
+
   private
 
   def generate_authorization_key
