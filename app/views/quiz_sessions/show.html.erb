@@ -16,7 +16,8 @@
 
   <div class="col-md-9">
 
-     <%= react_component('QuestionDisplay', question: @session.current_question.format(:title_with_answers)) %>
+     <% data = @session.current_question ? { question: @session.current_question.format(:title_with_answers) } : nil %>
+     <%= react_component('QuestionDisplay', data ) %>
 
   </div>
 </div>
