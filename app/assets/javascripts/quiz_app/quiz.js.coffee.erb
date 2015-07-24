@@ -114,8 +114,19 @@ class LiveQuiz
           React.render(<ParticipantsList newParticipant=uuid_with_status />, @participantListReact) 
 
     serverCallback: (event_message, env, ch, timer, magic_ch) =>
-      React.render(<QuestionDisplay question=event_message.data.question />, @questionDisplayReact)
-
+      switch(event_message.event)
+        when 'question' then React.render(<QuestionDisplay question=event_message.data.question />, @questionDisplayReact)
+        when 'answered'
+          message = { 
+                      action: event_message.event,
+                      timestamp: event_message.data.timestamp, 
+                      uuid: event_message.uuid, 
+                      data:  
+                        name: event_message.data.name
+                        correct: event_message.data.correct
+                    }
+          React.render(<ActivityFeed newActivity=message />, @activityFeedReact)
+      
     ##################### CLIENT COMMANDS ###################
 
     answerQuestion: (id) ->
