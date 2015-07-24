@@ -76,7 +76,7 @@ class LiveQuiz
 
     subscribeToChatChannel: ->
 
-      @pubnub.subscribe
+      @pubnub.subscribe(
         channel: @chat_channel
         state:
           name: @participant_name
@@ -84,12 +84,15 @@ class LiveQuiz
         presence: @presenceCallback
         connect: ->
         heartbeat: 20
+      )
 
     subscribeToServerChannel: ->
-      @pubnub.subscribe
-        channel: @server_channel,
-            message: @serverCallback
-            connect: ->
+        
+        @pubnub.subscribe(
+          channel: @server_channel
+          message: @serverCallback
+          connect: ->
+        )
 
     ###################### CALLBACKS #########################
 
@@ -110,8 +113,7 @@ class LiveQuiz
           uuid_with_status = {uuid: event_message.uuid, status: status, name: name}
           React.render(<ParticipantsList newParticipant=uuid_with_status />, @participantListReact) 
 
-    serverCallback: =>
-
+    serverCallback: (event_message, env, ch, timer, magic_ch) =>
       React.render(<QuestionDisplay question=event_message.data.question />, @questionDisplayReact)
 
     ##################### CLIENT COMMANDS ###################
