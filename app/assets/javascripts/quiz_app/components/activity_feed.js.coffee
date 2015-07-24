@@ -13,16 +13,29 @@
   getDefaultProp: ->
     activities: this.props.activities
 
+  activityList: ->
+      <ul>
+          {
+              this.state.activities.map( (activity )->
+                  key = activity.timestamp+'-'+activity.uuid
+                  <ActivityLine key={key} activity={activity} />
+              )
+          }
+        </ul>
+
+  noActivity: ->
+      <div>
+          <br />
+          <p>No activity</p>
+          <br />
+      </div>
+
   getInitialState: ->
     activities: [] 
   render: ->
-      <ul>
-        {
-            this.state.activities.map( (activity )->
-                key = activity.timestamp+'-'+activity.uuid
-                <ActivityLine key={key} activity={activity} />
-            )
-        }
-      </ul>
+      if this.state.activities.length > 0
+        @activityList()
+      else 
+        @noActivity()
     
 )
