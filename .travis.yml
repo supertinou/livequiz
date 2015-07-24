@@ -21,16 +21,16 @@ addons:
   postgresql: "9.3"
 sudo: false
 deploy:
-provider: heroku
-api_key: 1e910af9-0db1-4f6d-a9b7-0632db5be05b
-skip_cleanup: true
-on:
-all_branches: true
-app:
-master: livequiz-app
-develop: livequiz-staging
-run:
-- "rake db:migrate"
-- "rake db:setup"
-- "rake cleanup"
-- "rake db:seed"
+  provider: heroku
+  api_key: 1e910af9-0db1-4f6d-a9b7-0632db5be05b
+  skip_cleanup: true
+  on:
+    all_branches: true
+  app:
+    master: livequiz-app
+    develop: livequiz-staging
+  run:
+    - "rake db:migrate"
+    - "rake db:setup"
+    - "rake cleanup"
+    - "rake db:seed"
