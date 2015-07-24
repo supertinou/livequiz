@@ -50,8 +50,10 @@ class Session < ActiveRecord::Base
   # schedule switch to a next question every X secondes until the end
   def schedule_switch_to_next_question!(secondes)
       Rufus::Scheduler.singleton.in "#{secondes}s" do
-        if switch_to_next_question!
-          schedule_switch_to_next_question!(secondes)
+        ActiveRecord::Base.connection_pool.with_connection do
+          if switch_to_next_question!
+            schedule_switch_to_next_question!(secondes)
+          end
         end
       end
   end
