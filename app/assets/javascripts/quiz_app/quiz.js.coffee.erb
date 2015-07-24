@@ -15,6 +15,30 @@ class LiveQuiz
       @server_channel = @session_key+"-server"
       @chat_channel = @session_key+"-chat"
 
+    debug: ->
+
+      @debugSettings()
+      @debugReactComponents()
+
+
+    debugSettings: ->
+      console.log('@authorization_key: '+ @authorization_key)
+      console.log('@uuid: '+ @uuid)
+      console.log('@session_key: ' + @session_key)
+      console.log('@participant_name: ' + @participant_name)
+      console.log('@client_channel: ' + @client_channel)
+      console.log('@server_channel: ' + @server_channel)
+      console.log('@chat_channel: ' + @chat_channel)
+      console.log('@chat_channel: ' + @chat_channel)
+
+    debugReactComponents: ->
+      console.log('@participantListReact:')
+      console.log(@participantListReact)
+      console.log('@activityFeedReact:')
+      console.log(@activityFeedReact)
+      console.log('@questionDisplayReact:')
+      console.log(@questionDisplayReact)
+
     fetchReactComponents: ->
 
       @participantListReact = LiveQuiz.fetchReactDomComponentFromReactName('ParticipantsList')
