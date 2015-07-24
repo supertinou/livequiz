@@ -42,7 +42,17 @@ class Session < ActiveRecord::Base
     self.current_question_index = 0
     self.starting_date = DateTime.now()
     send_current_question()
+    schedule_switch_to_next_question!(30)
     save()
+  end
+
+  # schedule switch to a next question every X secondes until the end
+  def schedule_switch_to_next_question!(secondes)
+      Rufus::Scheduler.singleton.in "#{secondes}s" do
+        if switch_to_next_question!
+          schedule_switch_to_next_question!(secondes)
+        end
+      end
   end
 
   def send_current_question
@@ -52,7 +62,7 @@ class Session < ActiveRecord::Base
   def send_event_with_data(event, data)
       cb = lambda { |envelope| puts envelope.message }
       message = {event: event, data: data}
-      LiveQuiz::PubNub.client.publish(http_sync: true, message: message, channel: self.server_channel, auth_key: auth_key, callback: cb)
+      LiveQuiz::PubNub.client.publish(message: message, channel: self.server_channel, auth_key: auth_key, callback: cb)
   end
 
   def started?

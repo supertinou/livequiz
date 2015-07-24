@@ -36,6 +36,7 @@ gem 'underscore-rails'
 gem 'rails-livestamp'
 gem 'momentjs-rails'
 gem 'ranked-model'
+gem 'rufus-scheduler'
 
 
 

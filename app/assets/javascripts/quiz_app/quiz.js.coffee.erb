@@ -113,6 +113,19 @@ class LiveQuiz
 
       React.render(<QuestionDisplay question=event_message.data.question />, @questionDisplayReact)
 
+    ##################### CLIENT COMMANDS ###################
+
+    answerQuestion: (id) ->
+      @sendEvent('answer', {answer_id: id})
+
+
+    sendEvent: (event, data) ->
+      @pubnub.publish
+        channel: @client_channel        
+        message: data
+        callback : ->
+      
+
     ##################### UTILITIES ########################
 
     @fetchReactDomComponentFromReactName:  (react_name) ->
