@@ -115,19 +115,35 @@ class Session < ActiveRecord::Base
 
   def handle_question_answer(auth_key, answer_id)
     
-    participant, answered_correctly = nil, nil
-    
     ActiveRecord::Base.connection_pool.with_connection do
+      
       participant = self.participants.where(authorization_key: auth_key).take
+      
       answer = Answer.find(answer_id)
-      answered_correctly = participant.answer_question(current_question, answer)
-    end
+      allowed_to_answer_question = ( answer.question.id == current_question.id )
 
-    send_event_with_data('answered', { uuid: participant.authorization_key, 
+      if !participant.have_already_answered_the_question?(answer.question) 
+
+        if allowed_to_answer_question
+        
+          answered_correctly = participant.answer_question(current_question, answer)
+        
+          send_event_with_data('answered', { uuid: participant.authorization_key, 
                                        name: participant.name, 
                                        timestamp: Time.now.to_i,
                                        correct: answered_correctly
                                       })
+        else
+
+          send_event_with_data('answered_over_time', { uuid: participant.authorization_key, 
+                                                       name: participant.name, 
+                                                     })
+
+        end
+
+      end
+    end
+
   end
 
 private

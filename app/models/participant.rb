@@ -2,6 +2,7 @@ require "live_quiz/pub_nub"
 
 class Participant < ActiveRecord::Base
   belongs_to :session
+  has_many :participant_answers
   
   validates :email, email: true
   validates :email, uniqueness: { scope: :session, message: "cannot be used more than one time" }
@@ -12,10 +13,14 @@ class Participant < ActiveRecord::Base
   after_commit :grant_access_to_session_channels, on: :create
   after_commit :revoke_access_to_session_channels, on: :destroy
 
+  def have_already_answered_the_question?(question)
+    question.participant_answers.where(participant_id: self.id).count >= 1
+  end
   # Return if the question have been answered correctly or not
   def answer_question(question, answer)
-    question.correct_answer.id == answer.id
-    ## TODO Save Answered question
+    participant_answers.build(answer: answer)
+    save()
+    answer.correct?
   end
 
   private
