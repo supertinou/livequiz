@@ -55,6 +55,8 @@ class Session < ActiveRecord::Base
         ActiveRecord::Base.connection_pool.with_connection do
           if switch_to_next_question!
             schedule_switch_to_next_question!(secondes)
+          else
+            finish()
           end
         end
       end
@@ -62,6 +64,10 @@ class Session < ActiveRecord::Base
 
   def send_current_question
     send_event_with_data('question', {question: current_question.format(:title_with_answers)} )
+  end
+
+  def send_results
+    send_event_with_data('results', {results: results} )
   end
 
   def send_event_with_data(event, data)
@@ -94,6 +100,11 @@ class Session < ActiveRecord::Base
                           false
                         end
     return succeeded_to_switch                  
+  end
+
+  # End the quiz session and send the results
+  def finish
+    send_results()
   end
 
   def subscribe_to_client_events
