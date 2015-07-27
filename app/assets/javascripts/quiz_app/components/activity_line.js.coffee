@@ -3,8 +3,8 @@
       activity = this.props.activity
       action_verb = switch(activity.action)
                   when 'join' then 'has joined the quiz'
-                  when 'timeout' then 'has been disconnected'
-                  when 'leave' then 'has leaved the quiz'
+                  when 'timeout' then 'has left'
+                  when 'leave' then 'has left the quiz'
                   when 'state-change' then "has changed is name to #{activity.data.name}"
                   when 'answered' 
                     if activity.data.correct
