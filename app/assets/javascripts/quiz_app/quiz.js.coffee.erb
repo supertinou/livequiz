@@ -102,6 +102,7 @@ class LiveQuiz
                         correct: event_message.data.correct
                     }
           React.render(<ActivityFeed newActivity=message />, @activityFeedReact)
+        when 'results' then React.render(<ResultsDisplay results=event_message.data.results />, @questionDisplayReact) 
       
     ##################### CLIENT COMMANDS ###################
 

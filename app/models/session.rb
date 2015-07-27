@@ -38,12 +38,14 @@ class Session < ActiveRecord::Base
   end
 
   # Start the quiz session
-  def start!
+  def start!(config = {})
+    config[:mode] ||= :scheduled
+
     self.current_question_index = 0
     self.starting_date = DateTime.now()
     subscribe_to_client_events()
     send_current_question()
-    schedule_switch_to_next_question!(30)
+    schedule_switch_to_next_question!(30) if config[:mode] == :scheduled
     save()
   end
 
@@ -53,6 +55,8 @@ class Session < ActiveRecord::Base
         ActiveRecord::Base.connection_pool.with_connection do
           if switch_to_next_question!
             schedule_switch_to_next_question!(secondes)
+          else
+            finish!()
           end
         end
       end
@@ -62,6 +66,10 @@ class Session < ActiveRecord::Base
     send_event_with_data('question', {question: current_question.format(:title_with_answers)} )
   end
 
+  def send_results
+    send_event_with_data('results', {results: results} )
+  end
+
   def send_event_with_data(event, data)
       cb = lambda { |envelope| puts envelope.message }
       message = {event: event, data: data}
@@ -69,7 +77,11 @@ class Session < ActiveRecord::Base
   end
 
   def started?
-    starting_date.present?
+    starting_date.present? && self.current_question.present?
+  end
+
+  def finished?
+    starting_date.present? && !self.current_question.present?
   end
 
   def auth_key
@@ -94,6 +106,13 @@ class Session < ActiveRecord::Base
     return succeeded_to_switch                  
   end
 
+  # End the quiz session and send the results
+  def finish!
+    send_results()
+    self.current_question_index = nil
+    save()
+  end
+
   def subscribe_to_client_events
     LiveQuiz::PubNub.client.subscribe(
       channel:  client_channel,
@@ -115,19 +134,49 @@ class Session < ActiveRecord::Base
 
   def handle_question_answer(auth_key, answer_id)
     
-    participant, answered_correctly = nil, nil
-    
     ActiveRecord::Base.connection_pool.with_connection do
+      
       participant = self.participants.where(authorization_key: auth_key).take
+      
       answer = Answer.find(answer_id)
-      answered_correctly = participant.answer_question(current_question, answer)
-    end
+      allowed_to_answer_question = ( answer.question.id == current_question.id )
 
-    send_event_with_data('answered', { uuid: participant.authorization_key, 
+      if !participant.have_already_answered_the_question?(answer.question) 
+
+        if allowed_to_answer_question
+        
+          answered_correctly = participant.answer_question(current_question, answer)
+        
+          send_event_with_data('answered', { uuid: participant.authorization_key, 
                                        name: participant.name, 
                                        timestamp: Time.now.to_i,
                                        correct: answered_correctly
                                       })
+        else
+
+          send_event_with_data('answered_over_time', { uuid: participant.authorization_key, 
+                                                       name: participant.name, 
+                                                     })
+
+        end
+
+      end
+    end
+
+  end
+
+  def results
+
+    participants.order('points DESC').collect do |participant| 
+      {
+          points: participant.points,
+          uuid: participant.authorization_key, 
+          name: participant.name,
+          correct_answers_number: participant.number_of_correct_answers, 
+          wrong_answers_number: participant.number_of_wrong_answers 
+      }
+    end
+
   end
 
 private

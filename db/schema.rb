@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150723013007) do
+ActiveRecord::Schema.define(version: 20150726213206) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,14 +42,26 @@ ActiveRecord::Schema.define(version: 20150723013007) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
+  create_table "participant_answers", force: :cascade do |t|
+    t.integer  "participant_id"
+    t.integer  "answer_id"
+    t.integer  "response_time"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "participant_answers", ["answer_id"], name: "index_participant_answers_on_answer_id", using: :btree
+  add_index "participant_answers", ["participant_id"], name: "index_participant_answers_on_participant_id", using: :btree
+
   create_table "participants", force: :cascade do |t|
     t.integer  "session_id"
     t.string   "email"
     t.string   "authorization_key"
     t.string   "authorization_password"
     t.string   "name"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.integer  "points",                 default: 0, null: false
   end
 
   add_index "participants", ["session_id"], name: "index_participants_on_session_id", using: :btree
@@ -92,6 +104,8 @@ ActiveRecord::Schema.define(version: 20150723013007) do
   add_index "sessions", ["quiz_id"], name: "index_sessions_on_quiz_id", using: :btree
 
   add_foreign_key "answers", "questions"
+  add_foreign_key "participant_answers", "answers"
+  add_foreign_key "participant_answers", "participants"
   add_foreign_key "participants", "sessions"
   add_foreign_key "questions", "quizzes"
   add_foreign_key "sessions", "quizzes"

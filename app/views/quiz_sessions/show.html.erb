@@ -16,8 +16,13 @@
 
   <div class="col-md-9">
 
-     <% data = @session.current_question ? { question: @session.current_question.format(:title_with_answers) } : nil %>
-     <%= react_component('QuestionDisplay', data ) %>
+     <% if @session.started? %>
+        <%= react_component('QuestionDisplay', { question: @session.current_question.format(:title_with_answers) } ) %>
+     <% elsif @session.finished? %>
+        <%= react_component('ResultsDisplay', { results: @session.results } ) %>
+     <% else %>
+        <%= react_component('QuestionDisplay', nil ) %>
+     <% end %>
 
   </div>
 </div>

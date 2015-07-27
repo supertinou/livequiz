@@ -9,7 +9,7 @@ FactoryGirl.define do
 		  question.answers << FactoryGirl.build(:answer, title: 'blue', :question => question, correct: true)
 
 		  %w[red white green].each do |color|
-          	question.answers << FactoryGirl.build(:answer, title: color, :question => question)
+          	question.answers << FactoryGirl.build(:answer, title: color, :question => question, correct: false)
           end
         end
 

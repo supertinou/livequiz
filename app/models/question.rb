@@ -3,6 +3,8 @@ class Question < ActiveRecord::Base
 
   belongs_to :quiz
   has_many :answers, dependent: :destroy
+  has_many :participant_answers, through: :answers
+
   accepts_nested_attributes_for :answers, reject_if: :all_blank, allow_destroy: true
   
   ranks :row_order , with_same: :quiz_id
