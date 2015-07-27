@@ -56,7 +56,7 @@ class Session < ActiveRecord::Base
           if switch_to_next_question!
             schedule_switch_to_next_question!(secondes)
           else
-            finish()
+            finish!()
           end
         end
       end
@@ -77,7 +77,11 @@ class Session < ActiveRecord::Base
   end
 
   def started?
-    starting_date.present?
+    starting_date.present? && self.current_question.present?
+  end
+
+  def finished?
+    starting_date.present? && !self.current_question.present?
   end
 
   def auth_key
@@ -103,8 +107,10 @@ class Session < ActiveRecord::Base
   end
 
   # End the quiz session and send the results
-  def finish
+  def finish!
     send_results()
+    self.current_question_index = nil
+    save()
   end
 
   def subscribe_to_client_events

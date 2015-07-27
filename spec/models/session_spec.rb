@@ -34,6 +34,34 @@ RSpec.describe Session,  :type => :model, :vcr => {:cassette_name => 'models/ses
 
   end
 
+  describe '#finished?' do
+
+    context 'quiz is not started' do 
+      it 'should not be finished' do 
+        expect(quiz_session.finished?).to eq false
+      end
+    end 
+
+    context 'quiz is started' do 
+      before { quiz_session.start!  }
+      it 'should not be finished' do 
+        expect(quiz_session.finished?).to eq false
+      end
+    end 
+
+    context 'quiz has started and has finished' do 
+      before do
+       quiz_session.start!
+       quiz_session.finish!   
+      end
+      it 'should be finished but not started' do 
+        expect(quiz_session.started?).to eq false
+        expect(quiz_session.finished?).to eq true
+      end
+    end 
+
+  end
+
   describe '#switch_to_next_question!' do
 
     before { quiz_session.start! }
