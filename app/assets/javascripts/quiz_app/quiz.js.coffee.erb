@@ -96,12 +96,18 @@ class LiveQuiz
           message = { 
                       action: event_message.event,
                       timestamp: event_message.data.timestamp, 
-                      uuid: event_message.uuid, 
+                      uuid: event_message.data.uuid, 
                       data:  
                         name: event_message.data.name
                         correct: event_message.data.correct
                     }
           React.render(<ActivityFeed newActivity=message />, @activityFeedReact)
+          if event_message.data.uuid == @uuid
+            if event_message.data.correct
+              React.render(<CorrectAnswer />, @questionDisplayReact)
+            else
+              React.render(<WrongAnswer />, @questionDisplayReact)
+
         when 'results' then React.render(<ResultsDisplay results=event_message.data.results />, @questionDisplayReact) 
       
     ##################### CLIENT COMMANDS ###################

@@ -1,28 +1,37 @@
+<% content_for :navbar_content do %>
+  <li><p class="navbar-text"><i>Hi <%= @participant.name %> !</i></p></li>
+<% end %>
+
 <input type="hidden" data-attribute='authorization_key' value="<%= @participant.authorization_key %>" />
 <input type="hidden" data-attribute='session_key' value="<%= @session.access_key %>" />
+<input type="hidden" data-attribute='participant_name' value="<%= @participant.name %>" disabled />
 
-<div class="row">
-  <div class="col-md-3">
+<div id='wrapper'>
 
-  <input type="text" data-attribute='participant_name' value="<%= @participant.name %>" disabled />
-      <p class="big-text">Participants</p>
+    <div id="sidebar-wrapper">
       <%= react_component('ParticipantsList', participants: @participant_list ) %>
-      <br />
-      <p class="big-text">Activity feed</p>
-      <div class="list-group-item">          
-          <%= react_component('ActivityFeed' ) %>
-      </div>
-  </div>
+    </div>
 
-  <div class="col-md-9">
+    <div id="sidebar-wrapper-right">
+      <%= react_component('ActivityFeed' ) %>
+    </div>
 
-     <% if @session.started? %>
-        <%= react_component('QuestionDisplay', { question: @session.current_question.format(:title_with_answers) } ) %>
-     <% elsif @session.finished? %>
-        <%= react_component('ResultsDisplay', { results: @session.results } ) %>
-     <% else %>
-        <%= react_component('QuestionDisplay', nil ) %>
-     <% end %>
+    <div class="page-content-wrapper container-fluid">
 
-  </div>
+      <div class="row-fluid">
+        <div class="col-md-12">
+
+          <br  />
+           <% if @session.started? %>
+              <%= react_component('QuestionDisplay', { question: @session.current_question.format(:title_with_answers) } ) %>
+           <% elsif @session.finished? %>
+              <%= react_component('ResultsDisplay', { results: @session.results } ) %>
+           <% else %>
+              <%= react_component('QuestionDisplay', nil ) %>
+           <% end %>
+        </div>
+    </div>
+
+     
+
 </div>

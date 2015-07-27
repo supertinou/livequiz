@@ -484,4 +484,48 @@ http_interactions:
         {"status":403,"service":"Access Manager","error":true,"message":"Forbidden","payload":{"channels":["2f7b239e2b774792-server"]}}
     http_version: 
   recorded_at: Thu, 23 Jul 2015 16:08:14 GMT
+- request:
+    method: get
+    uri: http://pubsub.pubnub.com/publish/pub-c-ad63ffeb-855a-4fc8-9eeb-eecbbedb7b5b/sub-c-8a3fa712-2e6c-11e5-83fd-0619f8945a4f/sec-c-YTk4MjJhNmQtNDU5MC00YjJiLWJiNmUtZDA5OGY3NWNlYzRk/11b0383db96ce1e1-server/0/%7B%22event%22:%22question%22,%22data%22:%7B%22question%22:%7B%22title%22:%22Which%20color%20is%20the%20sky%20%3F%22,%22answers%22:%5B%7B%22id%22:4517,%22title%22:%22blue%22%7D,%7B%22id%22:4518,%22title%22:%22red%22%7D,%7B%22id%22:4519,%22title%22:%22white%22%7D,%7B%22id%22:4520,%22title%22:%22green%22%7D%5D%7D%7D%7D?auth=9572bfe541253db6&pnsdk=PubNub-Ruby/3.7.5&uuid=0a5fd11a-252b-462d-96cf-01d876cad06c
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - 30
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      Date:
+      - Mon, 27 Jul 2015 20:39:47 GMT
+      Content-Type:
+      - text/javascript; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Headers:
+      - Origin, X-Requested-With, Content-Type, Accept
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET
+    body:
+      encoding: UTF-8
+      string: |
+        {"status":403,"service":"Access Manager","error":true,"message":"Forbidden","payload":{"channels":["11b0383db96ce1e1-server"]}}
+    http_version: 
+  recorded_at: Mon, 27 Jul 2015 20:39:48 GMT
 recorded_with: VCR 2.9.3

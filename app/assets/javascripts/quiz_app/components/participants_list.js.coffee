@@ -10,7 +10,9 @@
       )
       if existing_participant_index?
         new_name = if new_participant.name? then new_participant.name else current_participants[existing_participant_index].name 
-        new_participant = {uuid: new_participant.uuid, name: new_name, status: new_participant.status }
+        new_email = if new_participant.email? then new_participant.email else current_participants[existing_participant_index].email 
+
+        new_participant = {uuid: new_participant.uuid, name: new_name, status: new_participant.status, email: new_email  }
         current_participants[existing_participant_index] = new_participant
       else
         updated_participants.push(new_participant)
@@ -31,16 +33,18 @@
   getInitialState: ->
     participants: ( this.props.participants || this.props.onlineParticipants )
   render: ->
-      <div className="list-group-item">
-          <h4 className="list-group-item-heading">Online ({countOnlineParticipants(this.state.participants)})</h4>
-          <hr />
-            <ul>
-              {
-                  this.state.participants.map( (participant)->
-                      <ParticipantStatus key={participant.uuid} participant={participant} />
-                  )
-              }
-            </ul>
+      <div className="panel panel-default">
+          <div className="panel-heading c-list">
+                    <span className="title">Participants ({countOnlineParticipants(this.state.participants)} online)</span>
+          </div>
+
+          <ul className="list-group" id="contact-list">
+            {
+                this.state.participants.map( (participant)->
+                    <ParticipantStatus key={participant.uuid} participant={participant} />
+                )
+            }
+          </ul>
       </div>
     
 )

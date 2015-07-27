@@ -108,10 +108,10 @@ RSpec.describe Session,  :type => :model, :vcr => {:cassette_name => 'models/ses
 
   	it 'displays result correctly' do
   		expect(subject).to eq(  [
-  								   {:points=>2, :uuid=>participant2.authorization_key, :name=>participant2.name, :correct_answers_number=>2, :wrong_answers_number=>0},
-  							       {:points=>1, :uuid=>participant1.authorization_key, :name=>participant1.name, :correct_answers_number=>1, :wrong_answers_number=>1},
-  								   {:points=>0, :uuid=>participant3.authorization_key, :name=>participant3.name, :correct_answers_number=>0, :wrong_answers_number=>0},
-  							       {:points=>0, :uuid=>participant4.authorization_key, :name=>participant4.name, :correct_answers_number=>0, :wrong_answers_number=>0}
+  								   {:points=>2, :uuid=>participant2.authorization_key, email: participant2.email , :name=>participant2.name, :correct_answers_number=>2, :wrong_answers_number=>0},
+  							       {:points=>1, :uuid=>participant1.authorization_key, email: participant1.email , :name=>participant1.name, :correct_answers_number=>1, :wrong_answers_number=>1},
+  								   {:points=>0, :uuid=>participant3.authorization_key, email: participant3.email , :name=>participant3.name, :correct_answers_number=>0, :wrong_answers_number=>0},
+  							       {:points=>0, :uuid=>participant4.authorization_key, email: participant4.email , :name=>participant4.name, :correct_answers_number=>0, :wrong_answers_number=>0}
   							    ]
   			)
   	end

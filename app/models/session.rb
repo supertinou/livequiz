@@ -172,6 +172,7 @@ class Session < ActiveRecord::Base
           points: participant.points,
           uuid: participant.authorization_key, 
           name: participant.name,
+          email: participant.email,
           correct_answers_number: participant.number_of_correct_answers, 
           wrong_answers_number: participant.number_of_wrong_answers 
       }

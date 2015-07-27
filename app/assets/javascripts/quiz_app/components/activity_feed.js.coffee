@@ -14,28 +14,39 @@
     activities: this.props.activities
 
   activityList: ->
-      <ul>
+
+      <div className="timeline">
+    
+        <div className="line text-muted"></div>
+
           {
               this.state.activities.map( (activity )->
                   key = activity.timestamp+'-'+activity.uuid
                   <ActivityLine key={key} activity={activity} />
               )
           }
-        </ul>
+    
+        </div>
+       
 
   noActivity: ->
-      <div>
-          <br />
-          <p>No activity</p>
-          <br />
+      <div className='well well-sm'>
+      <div className="row">
+          <div className="col-md-4">
+            <img className='media-object' src="/assets/no-activity.png" />
+          </div>
+          <div className="col-md-8">
+            <h4>No activity since your last logon</h4>
+          </div>
+        </div>
       </div>
 
   getInitialState: ->
     activities: [] 
   render: ->
-      if this.state.activities.length > 0
-        @activityList()
-      else 
-        @noActivity()
+          if this.state.activities.length > 0
+            @activityList()
+          else 
+            @noActivity()
     
 )
