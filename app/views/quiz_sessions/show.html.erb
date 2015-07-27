@@ -1,3 +1,7 @@
+<% content_for :navbar_content do %>
+  <li><p class="navbar-text"><i>Hi <%= @participant.name %> !</i></p></li>
+<% end %>
+
 <input type="hidden" data-attribute='authorization_key' value="<%= @participant.authorization_key %>" />
 <input type="hidden" data-attribute='session_key' value="<%= @session.access_key %>" />
 <input type="hidden" data-attribute='participant_name' value="<%= @participant.name %>" disabled />

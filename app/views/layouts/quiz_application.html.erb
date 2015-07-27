@@ -59,6 +59,9 @@
         
         <div class="navbar-collapse collapse navbar-responsive-collapse">
 
+        <ul class="nav navbar-nav">
+          <%= yield :navbar_content %>
+        </ul>
         <ul class="nav navbar-nav navbar-right">
               <li><%= link_to raw('<i class="fa fa-plus-circle"></i>
               Create your own quiz'), new_quiz_path() %></li>
