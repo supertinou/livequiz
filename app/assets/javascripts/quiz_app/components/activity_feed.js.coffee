@@ -14,28 +14,42 @@
     activities: this.props.activities
 
   activityList: ->
-      <ul>
+
+      <div className="timeline">
+    
+        <div className="line text-muted"></div>
+
           {
               this.state.activities.map( (activity )->
                   key = activity.timestamp+'-'+activity.uuid
                   <ActivityLine key={key} activity={activity} />
               )
           }
-        </ul>
+    
+        </div>
+       
 
   noActivity: ->
       <div>
-          <br />
-          <p>No activity</p>
-          <br />
+         
       </div>
 
   getInitialState: ->
     activities: [] 
   render: ->
-      if this.state.activities.length > 0
-        @activityList()
-      else 
-        @noActivity()
+      <div>
+        <div className="panel panel-default">
+            <div className="panel-heading c-list">
+                      <span className="title">Activity Feed</span>
+            </div>
+        </div>
+
+        { 
+          if this.state.activities.length > 0
+            @activityList()
+          else 
+            @noActivity()
+        }
+      </div>
     
 )

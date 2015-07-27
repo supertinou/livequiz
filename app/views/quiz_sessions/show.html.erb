@@ -1,26 +1,23 @@
+<input type="hidden" data-attribute='authorization_key' value="<%= @participant.authorization_key %>" />
+<input type="hidden" data-attribute='session_key' value="<%= @session.access_key %>" />
+<input type="hidden" data-attribute='participant_name' value="<%= @participant.name %>" disabled />
+
 <div id='wrapper'>
 
     <div id="sidebar-wrapper">
-              <%= react_component('ParticipantsList', participants: @participant_list ) %>
+      <%= react_component('ParticipantsList', participants: @participant_list ) %>
+    </div>
+
+    <div id="sidebar-wrapper-right">
+      <%= react_component('ActivityFeed' ) %>
     </div>
 
     <div class="page-content-wrapper container-fluid">
 
-      <input type="hidden" data-attribute='authorization_key' value="<%= @participant.authorization_key %>" />
-      <input type="hidden" data-attribute='session_key' value="<%= @session.access_key %>" />
+      <div class="row-fluid">
+        <div class="col-md-12">
 
-      <div class="row">
-        <div class="col-md-3">
-
-        <input type="text" data-attribute='participant_name' value="<%= @participant.name %>" disabled />
-            <p class="big-text">Activity feed</p>
-            <div class="list-group-item">          
-                <%= react_component('ActivityFeed' ) %>
-            </div>
-        </div>
-
-        <div class="col-md-9">
-
+          <br  />
            <% if @session.started? %>
               <%= react_component('QuestionDisplay', { question: @session.current_question.format(:title_with_answers) } ) %>
            <% elsif @session.finished? %>
@@ -28,8 +25,9 @@
            <% else %>
               <%= react_component('QuestionDisplay', nil ) %>
            <% end %>
-
         </div>
-      </div>
     </div>
+
+     
+
 </div>

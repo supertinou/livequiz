@@ -26,8 +26,17 @@
 
       classes = classNames('fa', action_icon)
       name = if activity.data? then activity.data.name else getParticipantNameFromUuid(activity.uuid)
-      <li className='small'>
-                  <i className={ classes }></i> <b>{name}</b> {action_verb} <span title={moment.unix(activity.timestamp).format('llll')} data-livestamp={activity.timestamp}></span>
-      </li>
+      <article className="panel panel-danger panel-outline">
+    
+            <div className="panel-heading icon">
+                <i className={ classes }></i>
+            </div>
+
+            <div className="panel-body">
+                <strong>{name}</strong> {action_verb} <span title={moment.unix(activity.timestamp).format('llll')} data-livestamp={activity.timestamp}></span>
+            </div>
+  
+    
+        </article>
     
 )

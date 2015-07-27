@@ -56,12 +56,12 @@
         </button>
 
         <a href="#" class="pull-left"><%= image_tag 'logo-livequizz.png', width: "85"%></a> <a class="navbar-brand" href="#">LiveQuiz</a>
+        
         <div class="navbar-collapse collapse navbar-responsive-collapse">
 
-        <ul class="nav navbar-nav pull-right">
-              <li><a href="#menu-toggle" id="menu-toggle">Toggle Participants</a></li>
-              <li><a href="#">Toggle Activity feed</a></li>
-
+        <ul class="nav navbar-nav navbar-right">
+              <li><%= link_to raw('<i class="fa fa-plus-circle"></i>
+              Create your own quiz'), new_quiz_path() %></li>
         </ul>
         </div>
       </div>
