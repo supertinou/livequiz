@@ -34,9 +34,6 @@
       <div className="panel panel-default">
           <div className="panel-heading c-list">
                     <span className="title">Participants ({countOnlineParticipants(this.state.participants)} online)</span>
-                    <ul className="pull-right c-controls">
-                        <li><a href="#" data-toggle="tooltip" data-placement="top" title="Invite someone"><i className="fa fa-plus"></i></a></li>
-                    </ul>
           </div>
 
           <ul className="list-group" id="contact-list">
