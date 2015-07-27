@@ -16,7 +16,7 @@
           <div className="list-group-item">
             <div className="row">
               <div className="col-md-2">
-                <img className='media-object' src="/assets/question.png" />
+                <img className='media-object' src="/images/question.png" />
               </div>
               <div className="col-md-9">
                 <h1>{ this.state.question.title }</h1>
@@ -40,7 +40,7 @@
         <div className="list-group-item">
             <div className="row">
               <div className="col-md-3">
-                <img className='media-object' src="/assets/cafe.png" />
+                <img className='media-object' src="/images/cafe.png" />
               </div>
               <div className="col-md-8">
                   <br />

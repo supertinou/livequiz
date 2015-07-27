@@ -33,7 +33,7 @@
       <div className='well well-sm'>
       <div className="row">
           <div className="col-md-4">
-            <img className='media-object' src="/assets/no-activity.png" />
+            <img className='media-object' src="/images/no-activity.png" />
           </div>
           <div className="col-md-8">
             <h4>No activity since your last logon</h4>
