@@ -1,13 +1,14 @@
-![LiveQuiz](http://cl.ly/image/1a2f213b3a1x/livequizz-logo.png)
-
-# LiveQuiz
+![LiveQuiz](http://cl.ly/image/1v1227352r2S/Screen%20Shot%202015-07-27%20at%2023.48.12.png)
+![Demo](http://cl.ly/image/0N2x3G0P473Z/Screen%20Shot%202015-07-27%20at%2023.40.01.png)
 
 __LiveQuiz is an app that allows you to create awesome real time quizzes. It is powered by [PubNub](https://www.pubnub.com/)__
 
 - Create a quiz with questions and answers
 - Create a quiz session and invite people
 - Start the Quiz
-- People can play the Quiz in realtime
+- People can play the Quiz in realtime and see the results
+
+
 
 ## Built With
 ![LiveQuiz Technologies](http://cl.ly/image/2i260O0G1m1S/livequiz-tech.png)
@@ -77,6 +78,8 @@ you can deploy to staging and production with:
     $ ./bin/deploy production
     
 ## Contributing
+
+Develop : [![Build Status](https://travis-ci.org/supertinou/livequiz.svg?branch=develop)](https://travis-ci.org/supertinou/livequiz)
 
 LiveQuiz is **100% free** and **open-source**. 
 You can find some features in the [issues page](https://github.com/supertinou/livequiz/issues)
