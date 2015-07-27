@@ -37,19 +37,9 @@
   getInitialState: ->
     activities: [] 
   render: ->
-      <div>
-        <div className="panel panel-default">
-            <div className="panel-heading c-list">
-                      <span className="title">Activity Feed</span>
-            </div>
-        </div>
-
-        { 
           if this.state.activities.length > 0
             @activityList()
           else 
             @noActivity()
-        }
-      </div>
     
 )
