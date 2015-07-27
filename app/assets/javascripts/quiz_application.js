@@ -21,4 +21,12 @@
 //= require react
 //= require react_ujs
 //= require jedwatson_classnames
+//= require md5
 //= require_tree ./quiz_app
+$(function() {
+	$("#menu-toggle").click(function(e) {
+	    e.preventDefault();
+	    $("#wrapper").toggleClass("toggled");
+	})
+});
+

@@ -31,16 +31,21 @@
   getInitialState: ->
     participants: ( this.props.participants || this.props.onlineParticipants )
   render: ->
-      <div className="list-group-item">
-          <h4 className="list-group-item-heading">Online ({countOnlineParticipants(this.state.participants)})</h4>
-          <hr />
-            <ul>
-              {
-                  this.state.participants.map( (participant)->
-                      <ParticipantStatus key={participant.uuid} participant={participant} />
-                  )
-              }
-            </ul>
+      <div className="panel panel-default">
+          <div className="panel-heading c-list">
+                    <span className="title">Participants ({countOnlineParticipants(this.state.participants)} online)</span>
+                    <ul className="pull-right c-controls">
+                        <li><a href="#" data-toggle="tooltip" data-placement="top" title="Invite someone"><i className="fa fa-plus"></i></a></li>
+                    </ul>
+          </div>
+
+          <ul className="list-group" id="contact-list">
+            {
+                this.state.participants.map( (participant)->
+                    <ParticipantStatus key={participant.uuid} participant={participant} />
+                )
+            }
+          </ul>
       </div>
     
 )

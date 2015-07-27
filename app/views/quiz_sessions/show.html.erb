@@ -1,28 +1,35 @@
-<input type="hidden" data-attribute='authorization_key' value="<%= @participant.authorization_key %>" />
-<input type="hidden" data-attribute='session_key' value="<%= @session.access_key %>" />
+<div id='wrapper'>
 
-<div class="row">
-  <div class="col-md-3">
+    <div id="sidebar-wrapper">
+              <%= react_component('ParticipantsList', participants: @participant_list ) %>
+    </div>
 
-  <input type="text" data-attribute='participant_name' value="<%= @participant.name %>" disabled />
-      <p class="big-text">Participants</p>
-      <%= react_component('ParticipantsList', participants: @participant_list ) %>
-      <br />
-      <p class="big-text">Activity feed</p>
-      <div class="list-group-item">          
-          <%= react_component('ActivityFeed' ) %>
+    <div class="page-content-wrapper container-fluid">
+
+      <input type="hidden" data-attribute='authorization_key' value="<%= @participant.authorization_key %>" />
+      <input type="hidden" data-attribute='session_key' value="<%= @session.access_key %>" />
+
+      <div class="row">
+        <div class="col-md-3">
+
+        <input type="text" data-attribute='participant_name' value="<%= @participant.name %>" disabled />
+            <p class="big-text">Activity feed</p>
+            <div class="list-group-item">          
+                <%= react_component('ActivityFeed' ) %>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+
+           <% if @session.started? %>
+              <%= react_component('QuestionDisplay', { question: @session.current_question.format(:title_with_answers) } ) %>
+           <% elsif @session.finished? %>
+              <%= react_component('ResultsDisplay', { results: @session.results } ) %>
+           <% else %>
+              <%= react_component('QuestionDisplay', nil ) %>
+           <% end %>
+
+        </div>
       </div>
-  </div>
-
-  <div class="col-md-9">
-
-     <% if @session.started? %>
-        <%= react_component('QuestionDisplay', { question: @session.current_question.format(:title_with_answers) } ) %>
-     <% elsif @session.finished? %>
-        <%= react_component('ResultsDisplay', { results: @session.results } ) %>
-     <% else %>
-        <%= react_component('QuestionDisplay', nil ) %>
-     <% end %>
-
-  </div>
+    </div>
 </div>

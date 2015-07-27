@@ -10,7 +10,7 @@ class QuizSessionsController < QuizApplicationController
 
 		@participant_list = @session.participants.to_a.collect do  |participant|
 			status = @participant.id == participant.id ? 'online' : ''
-			{ uuid: participant.authorization_key, status: status , name: participant.name }
+			{ uuid: participant.authorization_key, status: status , name: participant.name, email: participant.email  }
 		end
 	end
 end
