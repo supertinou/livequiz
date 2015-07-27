@@ -30,7 +30,7 @@
       <%= link_to raw('<i class="fa fa-exchange"></i> ')+t('.switch_to_next_question', :default => raw('Switch to the next question')), switch_to_next_question_session_path(@session), :class => 'btn btn-default'  %>
       <% end %> 
       
-<% else %>
+<% elsif !@session.finished?  %>
   <%= link_to raw('<i class="fa fa-play-circle"></i> ') + t('.start', :default => raw('Start the Quiz session')), start_session_path(@session), :class => 'btn btn-default'  %> 
 <% end %>
 
