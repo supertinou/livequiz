@@ -38,12 +38,14 @@ class Session < ActiveRecord::Base
   end
 
   # Start the quiz session
-  def start!
+  def start!(config = {})
+    config[:mode] ||= :scheduled
+
     self.current_question_index = 0
     self.starting_date = DateTime.now()
     subscribe_to_client_events()
     send_current_question()
-    schedule_switch_to_next_question!(30)
+    schedule_switch_to_next_question!(30) if config[:mode] == :scheduled
     save()
   end
 
@@ -142,6 +144,20 @@ class Session < ActiveRecord::Base
         end
 
       end
+    end
+
+  end
+
+  def results
+
+    participants.order('points DESC').collect do |participant| 
+      {
+          points: participant.points,
+          uuid: participant.authorization_key, 
+          name: participant.name,
+          correct_answers_number: participant.number_of_correct_answers, 
+          wrong_answers_number: participant.number_of_wrong_answers 
+      }
     end
 
   end

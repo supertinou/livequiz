@@ -19,8 +19,21 @@ class Participant < ActiveRecord::Base
   # Return if the question have been answered correctly or not
   def answer_question(question, answer)
     participant_answers.build(answer: answer)
+    add_points() if answer.correct?
     save()
-    answer.correct?
+    answer.correct? 
+  end
+
+  def add_points
+    self.points = self.points + 1
+  end
+
+  def number_of_correct_answers
+    participant_answers.joins(:answer).where({answers: {correct: true}}).count
+  end
+
+  def number_of_wrong_answers
+    participant_answers.joins(:answer).where({answers: {correct: false}}).count
   end
 
   private
