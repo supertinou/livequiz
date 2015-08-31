@@ -1,7 +1,7 @@
 class LiveQuiz
     constructor: () ->
 
-      @heartbeat = 20
+      @heartbeat = 40
 
       @uuid = gon.participant.authorization_key
       @auth_key = @uuid
@@ -30,13 +30,13 @@ class LiveQuiz
       @pubnub.here_now
         channel: @chat_channel
         state: true
-        callback: (m) =>
-          uuids_with_status = _.map(m.uuids, (uuid) -> 
-              { uuid: uuid.uuid, status: 'online', name: uuid.state.name, email: uuid.state.email }
+        callback: (message) =>
+          participants = _.map(message.uuids, (participant) -> 
+              { uuid: participant.uuid, status: 'online', name: participant.state.name, email: participant.state.email }
           )
-          React.render(<ParticipantsList participants=uuids_with_status />, @react('ParticipantsList'))  
+          React.render(<ParticipantsList participants=participants />, @react('ParticipantsList'))  
 
-    ###################### SUSCRIBE #########################
+    ###################### SUBSCRIBE #########################
 
     subscribeToChatChannel: ->
 
@@ -48,7 +48,7 @@ class LiveQuiz
         message: ->
         presence: @presenceCallback
         connect: ->
-        heartbeat: 20
+        heartbeat: @heartbeat
       )
 
     subscribeToServerChannel: ->
@@ -61,39 +61,39 @@ class LiveQuiz
 
     ###################### CALLBACKS #########################
 
-    presenceCallback: (event_message, env, ch, timer, magic_ch) =>
+    presenceCallback: (message) =>
 
-      React.render(<ActivityFeed newActivity=event_message />, @react('ActivityFeed'))
+      React.render(<ActivityFeed newActivity=message />, @react('ActivityFeed'))
       
-      status = switch event_message.action
+      status = switch message.action
           when 'leave' then 'offline'
           when 'timeout' then 'offline'
           when 'join' then 'online'
 
-      if status?
-          uuid_with_status = [{uuid: event_message.uuid, status: status, name: event_message.data.name, email: event_message.data.email}]
-          React.render(<ParticipantsList participants=uuid_with_status />, @react('ParticipantsList')) 
+      participants = [{uuid: message.uuid, status: status}]
+      React.render(<ParticipantsList participants=participants />, @react('ParticipantsList')) 
 
-    serverCallback: (event_message, env, ch, timer, magic_ch) =>
-      switch(event_message.event)
-        when 'question' then React.render(<QuestionDisplay question=event_message.data.question />, @react('QuestionDisplay'))
+    serverCallback: (message, env, ch, timer, magic_ch) =>
+      switch(message.event)
+        when 'question' then React.render(<QuestionDisplay question=message.data.question />, @react('QuestionDisplay'))
         when 'answered'
-          message = { 
-                      action: event_message.event,
-                      timestamp: event_message.data.timestamp, 
-                      uuid: event_message.data.uuid, 
-                      data:  
-                        name: event_message.data.name
-                        correct: event_message.data.correct
-                    }
-          React.render(<ActivityFeed newActivity=message />, @react('ActivityFeed'))
-          if event_message.data.uuid == @uuid
-            if event_message.data.correct
+          if message.data.uuid == @uuid
+            if message.data.correct
               React.render(<CorrectAnswer />, @react('QuestionDisplay'))
             else
               React.render(<WrongAnswer />, @react('QuestionDisplay'))
 
-        when 'results' then React.render(<ResultsDisplay results=event_message.data.results />, @react('QuestionDisplay')) 
+          activity = { 
+                      action: message.event,
+                      timestamp: message.data.timestamp, 
+                      uuid: message.data.uuid, 
+                      data:  
+                        name: message.data.name
+                        correct: message.data.correct
+                    }
+          React.render(<ActivityFeed newActivity=activity />, @react('ActivityFeed'))   
+
+        when 'results' then React.render(<ResultsDisplay results=message.data.results />, @react('QuestionDisplay')) 
       
     ##################### CLIENT COMMANDS ###################
 
