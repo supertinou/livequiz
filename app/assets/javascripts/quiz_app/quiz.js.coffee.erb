@@ -46,7 +46,7 @@ class LiveQuiz
           uuids_with_status = _.map(m.uuids, (uuid) -> 
               { uuid: uuid.uuid, status: 'online', name: uuid.state.name }
           )
-          React.render(<ParticipantsList onlineParticipants=uuids_with_status />, @participantListReact)  
+          React.render(<ParticipantsList participants=uuids_with_status />, @participantListReact)  
 
     ###################### SUSCRIBE #########################
 
@@ -86,8 +86,8 @@ class LiveQuiz
               null
 
       if status?
-          uuid_with_status = {uuid: event_message.uuid, status: status, name: name}
-          React.render(<ParticipantsList newParticipant=uuid_with_status />, @participantListReact) 
+          uuid_with_status = [{uuid: event_message.uuid, status: status, name: name}]
+          React.render(<ParticipantsList participants=uuid_with_status />, @participantListReact) 
 
     serverCallback: (event_message, env, ch, timer, magic_ch) =>
       switch(event_message.event)

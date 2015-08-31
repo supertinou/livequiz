@@ -1,5 +1,5 @@
 @ParticipantsList = React.createClass(
-  #This method is not called for the initial render.
+  
   componentWillReceiveProps: (nextProps) ->
     current_participants = this.state.participants
     updated_participants = current_participants
@@ -17,28 +17,21 @@
       else
         updated_participants.push(new_participant)
 
-    if nextProps.onlineParticipants?
-        _.each(nextProps.onlineParticipants, (participant) ->
-            addOrUpdateParticipant(participant)
-        )
-    else if nextProps.newParticipant?
-      addOrUpdateParticipant(nextProps.newParticipant)
-
+    _.each nextProps.participants, (participant) ->
+        addOrUpdateParticipant(participant)
+    
     this.setState
         participants: updated_participants
-  
-  getDefaultProp: ->
-    participants: this.props.participants
 
   getInitialState: ->
-    participants: ( this.props.participants || this.props.onlineParticipants )
+    participants: this.props.participants 
   render: ->
       <div className="panel panel-default">
           <div className="panel-heading c-list">
-                    <span className="title">Participants ({countOnlineParticipants(this.state.participants)} online)</span>
+                    <span className="c-title">Participants ({countOnlineParticipants(this.state.participants)} online)</span>
           </div>
 
-          <ul className="list-group" id="contact-list">
+          <ul className="list-group" >
             {
                 this.state.participants.map( (participant)->
                     <ParticipantStatus key={participant.uuid} participant={participant} />

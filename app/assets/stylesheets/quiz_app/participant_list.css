@@ -1,0 +1,20 @@
+.c-list {
+    padding: 0px;
+    min-height: 44px;
+}
+.c-title {
+    display: inline-block;
+    font-size: 1.0em;
+    font-weight: bold;
+    padding: 10px 15px;
+}
+
+.c-name {
+    font-size: 1.0em;
+    font-weight: 700;
+}
+
+.c-info {
+    padding: 5px 10px;
+    font-size: 1.25em;
+}
