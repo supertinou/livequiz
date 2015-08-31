@@ -8,7 +8,7 @@ class LiveQuiz
       @uuid = gon.participant.authorization_key
       @auth_key = @uuid
       @session_key = gon.session_key
-      @participant_name = gon.participant.name
+      @participant = gon.participant
       
       @client_channel = @session_key+"-client"
       @server_channel = @session_key+"-server"
@@ -42,7 +42,7 @@ class LiveQuiz
         state: true
         callback: (m) =>
           uuids_with_status = _.map(m.uuids, (uuid) -> 
-              { uuid: uuid.uuid, status: 'online', name: uuid.state.name }
+              { uuid: uuid.uuid, status: 'online', name: uuid.state.name, email: uuid.state.email }
           )
           React.render(<ParticipantsList participants=uuids_with_status />, @participantListReact)  
 
@@ -53,7 +53,8 @@ class LiveQuiz
       @pubnub.subscribe(
         channel: @chat_channel
         state:
-          name: @participant_name
+          name: @participant.name
+          email: @participant.email
         message: (m, env, ch, timer, magic_ch) ->
         presence: @presenceCallback
         connect: ->
@@ -78,13 +79,9 @@ class LiveQuiz
           when 'leave' then 'offline'
           when 'timeout' then 'offline'
           when 'join' then 'online'
-      name = if event_message.data?
-                event_message.data.name
-            else
-              null
 
       if status?
-          uuid_with_status = [{uuid: event_message.uuid, status: status, name: name}]
+          uuid_with_status = [{uuid: event_message.uuid, status: status, name: event_message.data.name, email: event_message.data.email}]
           React.render(<ParticipantsList participants=uuid_with_status />, @participantListReact) 
 
     serverCallback: (event_message, env, ch, timer, magic_ch) =>
