@@ -4,14 +4,12 @@ class LiveQuiz
       @heartbeat = 20
       @publish_key = '<%= ENV.fetch('PUBNUB_PUBLISH_KEY') %>'
       @subscribe_key = '<%= ENV.fetch('PUBNUB_SUBSCRIBE_KEY') %>'
-
-    fetchSettings: ->
-
-      @authorization_key = $('[data-attribute="authorization_key"]').val()
-      @auth_key = @authorization_key
-      @uuid = @auth_key
-      @session_key = $('[data-attribute="session_key"]').val()
-      @participant_name = $('[data-attribute="participant_name"]').val()
+      
+      @uuid = gon.participant.authorization_key
+      @auth_key = @uuid
+      @session_key = gon.session_key
+      @participant_name = gon.participant.name
+      
       @client_channel = @session_key+"-client"
       @server_channel = @session_key+"-server"
       @chat_channel = @session_key+"-chat"
@@ -132,8 +130,6 @@ class LiveQuiz
 @liveQuiz = new LiveQuiz()
 
 $ ->  
-  
-    liveQuiz.fetchSettings()
     liveQuiz.fetchReactComponents()
     liveQuiz.initializePubNub()
    
