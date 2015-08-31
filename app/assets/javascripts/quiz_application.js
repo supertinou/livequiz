@@ -15,7 +15,7 @@
 //= require rails-livestamp
 //= require moment
 //= require twitter/bootstrap
-//= require pubnub-3.7.12.min
+//= require pubnub
 //= require underscore
 //= require underscore_utilities
 //= require react

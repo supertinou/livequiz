@@ -179,6 +179,8 @@ GEM
       eventmachine (~> 1.0)
       json (~> 1.8)
       net-http-persistent (~> 2.9)
+    pubnub-js (3.7.14.2)
+      railties (>= 3.1)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -345,6 +347,7 @@ DEPENDENCIES
   pg
   pry-rails
   pubnub
+  pubnub-js (~> 3.7.14)
   rack-timeout
   rails (= 4.2.3)
   rails-livestamp
