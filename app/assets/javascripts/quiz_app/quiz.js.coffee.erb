@@ -1,10 +1,8 @@
 class LiveQuiz
     constructor: () ->
-      @pubnub = null
+
       @heartbeat = 20
-      @publish_key = '<%= ENV.fetch('PUBNUB_PUBLISH_KEY') %>'
-      @subscribe_key = '<%= ENV.fetch('PUBNUB_SUBSCRIBE_KEY') %>'
-      
+
       @uuid = gon.participant.authorization_key
       @auth_key = @uuid
       @session_key = gon.session_key
@@ -14,26 +12,18 @@ class LiveQuiz
       @server_channel = @session_key+"-server"
       @chat_channel = @session_key+"-chat"
 
-    fetchReactComponents: ->
-
-      @participantListReact = LiveQuiz.fetchReactDomComponentFromReactName('ParticipantsList')
-      @activityFeedReact = LiveQuiz.fetchReactDomComponentFromReactName('ActivityFeed')
-      @questionDisplayReact = LiveQuiz.fetchReactDomComponentFromReactName('QuestionDisplay')
-
-    initializePubNub: () ->
-
       @pubnub = PUBNUB(
-          publish_key: @publish_key
-          subscribe_key: @subscribe_key
+          publish_key: '<%= ENV.fetch('PUBNUB_PUBLISH_KEY') %>'
+          subscribe_key: '<%= ENV.fetch('PUBNUB_SUBSCRIBE_KEY') %>'
           auth_key: @auth_key
           uuid: @uuid
           origin: 'pubsub.pubnub.com'
           ssl: true
       )
+
       @subscribeToChatChannel()
       @subscribeToServerChannel()
       @whoIsHereNow()
-
 
     whoIsHereNow: ->
 
@@ -44,7 +34,7 @@ class LiveQuiz
           uuids_with_status = _.map(m.uuids, (uuid) -> 
               { uuid: uuid.uuid, status: 'online', name: uuid.state.name, email: uuid.state.email }
           )
-          React.render(<ParticipantsList participants=uuids_with_status />, @participantListReact)  
+          React.render(<ParticipantsList participants=uuids_with_status />, @react('ParticipantsList'))  
 
     ###################### SUSCRIBE #########################
 
@@ -55,7 +45,7 @@ class LiveQuiz
         state:
           name: @participant.name
           email: @participant.email
-        message: (m, env, ch, timer, magic_ch) ->
+        message: ->
         presence: @presenceCallback
         connect: ->
         heartbeat: 20
@@ -73,7 +63,7 @@ class LiveQuiz
 
     presenceCallback: (event_message, env, ch, timer, magic_ch) =>
 
-      React.render(<ActivityFeed newActivity=event_message />, @activityFeedReact)
+      React.render(<ActivityFeed newActivity=event_message />, @react('ActivityFeed'))
       
       status = switch event_message.action
           when 'leave' then 'offline'
@@ -82,11 +72,11 @@ class LiveQuiz
 
       if status?
           uuid_with_status = [{uuid: event_message.uuid, status: status, name: event_message.data.name, email: event_message.data.email}]
-          React.render(<ParticipantsList participants=uuid_with_status />, @participantListReact) 
+          React.render(<ParticipantsList participants=uuid_with_status />, @react('ParticipantsList')) 
 
     serverCallback: (event_message, env, ch, timer, magic_ch) =>
       switch(event_message.event)
-        when 'question' then React.render(<QuestionDisplay question=event_message.data.question />, @questionDisplayReact)
+        when 'question' then React.render(<QuestionDisplay question=event_message.data.question />, @react('QuestionDisplay'))
         when 'answered'
           message = { 
                       action: event_message.event,
@@ -96,14 +86,14 @@ class LiveQuiz
                         name: event_message.data.name
                         correct: event_message.data.correct
                     }
-          React.render(<ActivityFeed newActivity=message />, @activityFeedReact)
+          React.render(<ActivityFeed newActivity=message />, @react('ActivityFeed'))
           if event_message.data.uuid == @uuid
             if event_message.data.correct
-              React.render(<CorrectAnswer />, @questionDisplayReact)
+              React.render(<CorrectAnswer />, @react('QuestionDisplay'))
             else
-              React.render(<WrongAnswer />, @questionDisplayReact)
+              React.render(<WrongAnswer />, @react('QuestionDisplay'))
 
-        when 'results' then React.render(<ResultsDisplay results=event_message.data.results />, @questionDisplayReact) 
+        when 'results' then React.render(<ResultsDisplay results=event_message.data.results />, @react('QuestionDisplay')) 
       
     ##################### CLIENT COMMANDS ###################
 
@@ -116,17 +106,11 @@ class LiveQuiz
         channel: @client_channel        
         message: { event: event, auth_key: @auth_key, data: data}
         callback : ->
-      
 
-    ##################### UTILITIES ########################
-
-    @fetchReactDomComponentFromReactName:  (react_name) ->
+   ##################### UTILITIES ########################
+   
+   # Fetch a react component from the react name
+    react: (react_name) ->
       $("[data-react-class=#{react_name}]").get(0)
 
-
-@liveQuiz = new LiveQuiz()
-
-$ ->  
-    liveQuiz.fetchReactComponents()
-    liveQuiz.initializePubNub()
-   
+@liveQuiz = new LiveQuiz()   
