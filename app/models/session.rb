@@ -71,9 +71,8 @@ class Session < ActiveRecord::Base
   end
 
   def send_event_with_data(event, data)
-      cb = lambda { |envelope| puts envelope.message }
       message = {event: event, data: data}
-      LiveQuiz::PubNub.client.publish(message: message, channel: self.server_channel, auth_key: auth_key, callback: cb)
+      LiveQuiz::PubNub.client.publish(message: message, channel: self.server_channel, auth_key: auth_key){||}
   end
 
   def started?
