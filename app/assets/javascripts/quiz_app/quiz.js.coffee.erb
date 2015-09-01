@@ -69,8 +69,10 @@ class LiveQuiz
           when 'leave' then 'offline'
           when 'timeout' then 'offline'
           when 'join' then 'online'
+      
+      data = message.data || {}
 
-      participants = [{uuid: message.uuid, status: status}]
+      participants = [{uuid: message.uuid, status: status, name: data.name, email: data.email }]
       React.render(<ParticipantsList participants=participants />, @react('ParticipantsList')) 
 
     serverCallback: (message, env, ch, timer, magic_ch) =>
