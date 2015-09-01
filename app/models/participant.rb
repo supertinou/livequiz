@@ -51,15 +51,15 @@ class Participant < ActiveRecord::Base
 	end
 
   def grant_access_to_session_channels
-    LiveQuiz::PubNub.client.grant(channel: self.session.server_channel, auth_key: self.authorization_key ,  read: true, write: false){|envelope| puts envelope.payload}
-    LiveQuiz::PubNub.client.grant(channel: self.session.client_channel, auth_key: self.authorization_key ,  read: false, write: true){|envelope| puts envelope.payload}
-    LiveQuiz::PubNub.client.grant(:channel => self.session.chat_channel, presence: self.session.chat_channel, auth_key: self.authorization_key){|envelope| puts envelope.payload}
+    LiveQuiz::PubNub.client.grant(channel: self.session.server_channel, auth_key: self.authorization_password ,  read: true, write: false){|envelope| puts envelope.payload}
+    LiveQuiz::PubNub.client.grant(channel: self.session.client_channel, auth_key: self.authorization_password ,  read: false, write: true){|envelope| puts envelope.payload}
+    LiveQuiz::PubNub.client.grant(:channel => self.session.chat_channel, presence: self.session.chat_channel, auth_key: self.authorization_password){|envelope| puts envelope.payload}
   end
 
   def revoke_access_to_session_channels
-    LiveQuiz::PubNub.client.revoke(:channel => self.session.server_channel, auth_key: self.authorization_key){|envelope|}
-    LiveQuiz::PubNub.client.revoke(:channel => self.session.client_channel, auth_key: self.authorization_key){|envelope|} 
-    LiveQuiz::PubNub.client.revoke(:channel => self.session.chat_channel, presence: self.session.chat_channel, auth_key: self.authorization_key){|envelope|}
+    LiveQuiz::PubNub.client.revoke(:channel => self.session.server_channel, auth_key: self.authorization_password){|envelope|}
+    LiveQuiz::PubNub.client.revoke(:channel => self.session.client_channel, auth_key: self.authorization_password){|envelope|} 
+    LiveQuiz::PubNub.client.revoke(:channel => self.session.chat_channel, presence: self.session.chat_channel, auth_key: self.authorization_password){|envelope|}
   end
 
 end

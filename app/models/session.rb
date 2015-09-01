@@ -136,7 +136,7 @@ class Session < ActiveRecord::Base
     
     ActiveRecord::Base.connection_pool.with_connection do
       
-      participant = self.participants.where(authorization_key: auth_key).take
+      participant = self.participants.where(authorization_password: auth_key).take
       
       answer = Answer.find(answer_id)
       allowed_to_answer_question = ( answer.question.id == current_question.id )

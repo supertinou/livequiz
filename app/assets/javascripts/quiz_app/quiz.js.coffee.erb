@@ -4,7 +4,7 @@ class LiveQuiz
       @heartbeat = 40
 
       @uuid = gon.participant.authorization_key
-      @auth_key = @uuid
+      @auth_key = gon.participant.authorization_password
       @session_key = gon.session_key
       @participant = gon.participant
       
