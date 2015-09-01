@@ -1,43 +1,31 @@
 @QuestionDisplay = React.createClass(
-  # This method is not called for the initial render
-  componentWillReceiveProps: (nextProps) ->
-    this.setState
-        question: nextProps.question
-  
-  getDefaultProp: ->
-    question: this.props.question
-
-  getInitialState: ->
-    question: this.props.question
-
-  render: ->
-      if this.state.question?
-        <div>
-          <div className="list-group-item">
-            <div className="row">
-              <div className="col-md-2">
-                <img className='media-object' src="/images/question.png" />
-              </div>
-              <div className="col-md-9">
-                <h1>{ this.state.question.title }</h1>
-              </div>
-            </div>
+  renderQuestion:  ->
+    <div>
+      <div className="list-group-item">
+        <div className="row">
+          <div className="col-md-2">
+            <img className='media-object' src="/images/question.png" />
           </div>
-          <br />
-          <br />
-          <div className="list-group-item">
-          <br />
-            <ul>
-              {
-                  this.state.question.answers.map( ( answer )->
-                      <AnswerLine key={answer.id} answer={answer} />
-                  )
-              }
-            </ul>
+          <div className="col-md-9">
+            <h1>{ this.props.question.title }</h1>
           </div>
         </div>
-      else  
-        <div className="list-group-item">
+      </div>
+      <br />
+      <br />
+      <div className="list-group-item">
+      <br />
+        <ul>
+          {
+              this.props.question.answers.map( ( answer )->
+                  <AnswerLine key={answer.id} answer={answer} />
+              )
+          }
+        </ul>
+      </div>
+    </div>
+  renderWaitingScreen: ->
+    <div className="list-group-item">
             <div className="row">
               <div className="col-md-3">
                 <img className='media-object' src="/images/cafe.png" />
@@ -49,6 +37,11 @@
               </div>
             </div>
         </div>
-      
-    
+
+  render: ->
+    if this.props.question?
+      @renderQuestion()  
+    else 
+      @renderWaitingScreen()
+        
 )
