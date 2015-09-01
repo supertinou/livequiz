@@ -190,13 +190,13 @@ private
 
   def set_forbidden_access_to_session_channels
       [server_channel,client_channel,chat_channel].each do |chan| 
-        LiveQuiz::PubNub.client.grant(http_sync: true, channel: chan, read: false, write: false){|envelope|}
+        LiveQuiz::PubNub.client.grant(http_sync: true, channel: chan, read: false, write: false)
       end
   end
 
   def allow_full_rights_to_channels_to_quiz
       [server_channel,client_channel].each do |chan|
-          LiveQuiz::PubNub.client.grant(http_sync: true, channel: chan, presence: chan, auth_key: auth_key, read: true, write: true){|envelope| puts envelope.payload}
+          LiveQuiz::PubNub.client.grant(http_sync: true, channel: chan, presence: chan, auth_key: auth_key, read: true, write: true)
       end
   end
 
