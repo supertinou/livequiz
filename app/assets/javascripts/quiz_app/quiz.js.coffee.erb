@@ -78,10 +78,7 @@ class LiveQuiz
         when 'question' then React.render(<QuestionDisplay question=message.data.question />, @react('QuestionDisplay'))
         when 'answered'
           if message.data.uuid == @uuid
-            if message.data.correct
-              React.render(<CorrectAnswer />, @react('QuestionDisplay'))
-            else
-              React.render(<WrongAnswer />, @react('QuestionDisplay'))
+            React.render(<SuccessNotifier success=message.data.correct />, @react('QuestionDisplay'))
 
           activity = { 
                       action: message.event,
