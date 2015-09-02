@@ -15,15 +15,6 @@
     margin-left: 30px;
 }
 
-.timeline .separator {
-    border-top: 1px solid currentColor;
-    padding: 5px;
-    padding-left: 40px;
-    font-style: italic;
-    font-size: .9em;
-    margin-left: 30px;
-}
-
 .timeline .line::before { top: -4px; }
 .timeline .line::after { bottom: -4px; }
 .timeline .line::before,
