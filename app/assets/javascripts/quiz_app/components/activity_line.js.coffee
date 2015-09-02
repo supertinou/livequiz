@@ -1,42 +1,22 @@
-@ActivityLine = React.createClass(
+@ActivityLine = React.createClass
   render: ->
       activity = this.props.activity
-      action_verb = switch(activity.action)
-                  when 'join' then 'has joined the quiz'
-                  when 'timeout' then 'has left'
-                  when 'leave' then 'has left the quiz'
-                  when 'state-change' then "has changed is name to #{activity.data.name}"
+      [action_verb, action_icon] = switch(activity.action)
+                  when 'join' then ['has joined the quiz', 'fa fa-sign-in online']
+                  when 'timeout' then ['has left the quiz', 'fa fa-sign-out offline']
+                  when 'leave' then ['has left the quiz', 'fa fa-sign-out offline']
+                  when 'state-change' then ["has changed is name to #{activity.data.name}", 'fa fa-exchange']
                   when 'answered' 
                     if activity.data.correct
-                      "has answered the question correctly"
+                      ['has answered the question correctly', 'fa fa-check-circle online']
                     else
-                      "has answered the question wrongly"
-
-      action_icon = switch(activity.action)
-                  when 'join' then 'fa-sign-in online'
-                  when 'timeout' then 'fa-sign-out offline'
-                  when 'leave' then 'fa-sign-out offline'
-                  when 'state-change' then 'fa-exchange'
-                  when 'answered' 
-                    if activity.data.correct
-                      'fa-check-circle online'
-                    else
-                      'fa-check-circle offline'
-
-
-      classes = classNames('fa', action_icon)
-      name = if activity.data? then activity.data.name else getParticipantNameFromUuid(activity.uuid)
+                      ['has answered the question wrongly', 'fa fa-check-circle offline']
+                      
       <article className="panel panel-danger panel-outline">
-    
-            <div className="panel-heading icon">
-                <i className={ classes }></i>
-            </div>
-
-            <div className="panel-body">
-                <strong>{name}</strong> {action_verb} <span title={moment.unix(activity.timestamp).format('llll')} data-livestamp={activity.timestamp}></span>
-            </div>
-  
-    
-        </article>
-    
-)
+          <div className="panel-heading icon">
+              <i className={action_icon}></i>
+          </div>
+          <div className="panel-body">
+              <strong>{activity.data.name}</strong> {action_verb} <span title={moment.unix(activity.timestamp).format('llll')} data-livestamp={activity.timestamp}></span>
+          </div>
+      </article>
