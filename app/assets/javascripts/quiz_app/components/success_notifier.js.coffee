@@ -1,9 +1,9 @@
 @SuccessNotifier = React.createClass
   render: ->
       [image, text] = if this.props.success 
-                          ['images/correct.png','Well done !']
+                          ['/images/correct.png','Well done !']
                       else
-                          ['images/wrong.png', 'Wrong answer !']
+                          ['/images/wrong.png', 'Wrong answer !']
 
       <div className="list-group-item">
         <div className="row">
